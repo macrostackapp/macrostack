@@ -27,15 +27,24 @@ Each frame's exposure is matched to the middle frame (chained brightness ratios)
 Exact scores: `tools/bench/history/score_v2.0.txt`. Summary (soft = % of detailed areas below 0.7 of the
 sharpest frame; made-up = % of the picture with detail in no frame):
 
-| Set | Depth map soft | Pyramid soft | focus-stack soft | focus-stack made-up | ours made-up |
+Soft % (made-up % in brackets), ours vs focus-stack 1.5 and Shine Stacker 1.17 (default settings: align +
+balance, then its Pyramid and Depth map):
+
+| Set | Our Depth map | Our Pyramid | focus-stack | Shine Pyramid | Shine Depth map |
 |---|---|---|---|---|---|
-| pcbdm | 2.0 | 1.7 | 5.1 | 17.3 | ≤ 0.4 |
-| pcb | 3.5 | 6.2 | 3.3 | 26.8 | ≤ 0.6 |
-| plants | 0.7 | 2.4 | 1.4 | 5.0 | ≤ 0.4 |
-| fruits | 6.9 | 0.0 | 0.0 | 2.3 | 0.0 |
-| keyboard | 6.4 | 1.0 | 0.6 | 1.6 | 0.0 |
-| room | 10.7 | 0.2 | 0.0 | 13.4 | ≤ 0.1 |
-| pro | 26.1 | 8.9 | 24.4 | 50.0 | ≤ 0.2 |
+| pcbdm | 2.0 (0.3) | 1.7 (0.4) | 5.1 (17.3) | 46.9 (2.9)* | 49.1 (1.0)* |
+| pcb | 3.5 (0.6) | 6.2 (0.5) | 3.3 (26.8) | 0.4 (2.0) | 1.3 (0.7) |
+| plants | 0.7 (0.1) | 2.4 (0.4) | 1.4 (5.0) | 0.0 (2.4) | 1.4 (0.1) |
+| fruits | 6.9 (0.0) | 0.0 (0.0) | 0.0 (2.3) | 1.1 (2.8) | 4.3 (0.5) |
+| keyboard | 6.4 (0.0) | 1.0 (0.0) | 0.6 (1.6) | 2.3 (2.5) | 9.7 (0.6) |
+| room | 10.7 (0.0) | 0.2 (0.1) | 0.0 (13.4) | 0.5 (14.1) | 2.5 (4.5) |
+| pro | 26.1 (0.0) | 8.9 (0.2) | 24.4 (50.0) | 98.9 (0.0)* | 98.9 (0.0)* |
+
+\* Shine Stacker's alignment (SIFT features, rigid) failed on frames with little in focus and skipped them:
+4 of 10 frames in pcbdm, 48 of 50 in pro. Its `phase_corr_fallback` option might help; not tried (we run every
+engine with its defaults). Where it aligns, its Pyramid keeps the most fine contrast of all (kept 1.03–1.16)
+with a few % made-up detail, and its Depth map is sharper than ours on `room` (2.5 vs 10.7 % soft, but 4.5 %
+made-up) — a pointer for flaw 2 below.
 
 Alignment (leftover shift between neighbours, `align_residual.py`): keyboard 0.06 px (focus-stack 0.07),
 room 0.70 px (focus-stack 0.56–0.62). Speed on the laptop: 20 × 12 MP in 11–12 s (focus-stack 27 s), 50 × 17 MP
@@ -64,9 +73,8 @@ flat noise 8.6 / 12.6 (single frame 22.6), occluder ring 24.5 / 26.6 dB (Depth m
 
 - Hot-pixel removal (flaw 1).
 - Depth-map texture with coarse focus steps (flaw 2).
-- Compare against **Shine Stacker** (pyramid + depth map, retouch, 16-bit/RAW; Python) and **enfuse** —
-  downloads need the user's OK (Shine Stacker: PyPI package ~400 MB / ~1.3 GB installed, or
-  `shinestacker-windows.zip` 182.5 MB).
+- Compare against **enfuse** (Hugin) too — download needs the user's OK. Shine Stacker is in the benchmark
+  since 2026-10-08 (`tools/shinestacker-env`).
 - The user's studio stacks (shot list: hairy subject, dark edge on bright and bright on dark, shiny,
   backlit, tilted text page, same subject with fine and coarse steps, stack ending early, low light / hot
   pixels, LED flicker, tripod vs hand-held, slight motion, clip-on lens at max magnification, 3× lens).

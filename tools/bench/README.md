@@ -1,7 +1,7 @@
 # Engine benchmark
 
-Runs MacroStack's two merge methods and focus-stack on the same focus stacks, and scores them against the
-source frames. How it fits into the improvement work: see "The engine improvement loop" in `CLAUDE.md`.
+Runs MacroStack's two merge methods, focus-stack and Shine Stacker (Pyramid and Depth map, its standard
+align + balance settings) on the same focus stacks, and scores them against the source frames. How it fits into the improvement work: see "The engine improvement loop" in `CLAUDE.md`.
 
 ```bash
 sh tools/bench/bench_all.sh LABEL [SET ...]          # all sets in sets.txt if none given
@@ -10,7 +10,9 @@ python tools/bench/compare_scores.py tools/bench/history/score_v2.0.txt tools/be
 
 - `sets.txt` lists the test stacks: name, role (`tune` or `holdout`), frames, what each tests. A folder in
   `samples\` that isn't listed can still be run by its folder name.
-- focus-stack runs once per set; its result is cached in `work/bench/SET_focusstack.png`.
+- focus-stack and Shine Stacker run once per set; their results are cached in `work/bench/` (`SET_focusstack.png`,
+  `SET_shine_pyramid.png`, `SET_shine_depth_map.png`; delete them to rerun). `NO_SHINE=1` skips Shine Stacker,
+  which is slow on big stacks. `shinestacker_run.py` is the script that drives it.
 - Scores go to `work/bench/score_LABEL.txt`. Per method: **kept** = the result's detail ÷ the sharpest
   frame's, over blocks with real detail (median); **soft** = % of those blocks below 0.7; **made-up** = % of
   all blocks with more than 1.5× the detail of every frame (halos, noise, artifacts). Frames are compared

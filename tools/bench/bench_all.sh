@@ -9,6 +9,7 @@ T=C:/dev/macro-app/tools/bench
 W=$ROOT/tools/bench/work
 WW=C:/dev/macro-app/tools/bench/work
 FS=$ROOT/tools/focus-stack/focus-stack/focus-stack.exe
+SHINE=$ROOT/tools/shinestacker-env/Scripts/python.exe   # optional; NO_SHINE=1 skips it
 REG=$ROOT/tools/bench/sets.txt
 label=$1; shift
 sets=${*:-$(grep -v '^#' $REG | awk 'NF { print $1 }')}
@@ -29,6 +30,10 @@ for tag in $sets; do
   if [ ! -f $W/bench/${tag}_focusstack.png ]; then
     s=$(date +%s.%N); $FS --align-keep-size --output=$W/bench/${tag}_focusstack.png $src > $W/bench/${tag}_fs.log 2>&1; e=$(date +%s.%N)
     python -c "print('$tag focus-stack: %.1f s' % ($e - $s))" | tee $W/bench/${tag}_fs_time.txt
+  fi
+  if [ -x "$SHINE" ] && [ -z "$NO_SHINE" ] && [ ! -f $W/bench/${tag}_shine_pyramid.png ]; then
+    $SHINE $T/shinestacker_run.py $tag $src > $W/bench/${tag}_shine.log 2>&1
+    tail -1 $W/bench/${tag}_shine.log
   fi
   sh $ROOT/tools/bench/bench.sh "$WW/ppm_$tag" $tag | grep -v Starting
   python $T/bench_score.py $tag auto 0 $WW/ppm_$tag | tee -a $W/bench/score_$label.txt

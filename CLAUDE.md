@@ -17,9 +17,21 @@ to pick the work up in any new session without re-explaining. Everything needed 
   **Read it first** for any engine work; update it after every change.
 - `tools/bench/` — benchmark against other stackers (README there); `sets.txt` lists the test stacks;
   `history/` keeps each version's scores; `work/` is disposable.
-- `tools/focus-stack/` — focus-stack 1.5 for Windows (MIT), the comparison engine.
+- `tools/focus-stack/` — focus-stack 1.5 for Windows (MIT), and `tools/shinestacker-env/` — Shine Stacker 1.17
+  (Python, its own environment): the comparison engines. Both run automatically in the benchmark.
 - `samples/` — test stacks (large, not code). Licences: `pro_macro` CC BY 4.0, credit Johannes Sood if
   shown anywhere; `pcb*` from focus-stack (MIT); `phone_dff` research data (Suwajanakorn et al. 2015).
+
+## Version history (git)
+
+- Local git repository, no remote (the user asked for local version history only; nothing is uploaded).
+  Each finished version is one commit on `main`, tagged `vX.Y`. The user approved committing finished
+  versions this way. Ask before anything else (pushing, rewriting history, deleting tags).
+- Not tracked (see `.gitignore`): `samples/` (test stacks, 2 GB), `tools/focus-stack/` (focus-stack 1.5 for
+  Windows from github.com/PetteriAimonen/focus-stack/releases), `tools/shinestacker-env/` (`python -m venv`
+  + `pip install shinestacker`), `tools/bench/work/`, `MacroStack.apk`. If a tool is missing, re-getting it
+  needs the user's OK (it's a download).
+- `.gitattributes` keeps LF line endings (shell scripts break with CRLF).
 
 ## Build, test, deliver
 

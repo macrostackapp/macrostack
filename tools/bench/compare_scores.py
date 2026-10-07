@@ -12,7 +12,9 @@ import os
 import re
 import sys
 
-ENGINES = {"ours depth map": "Depth map", "ours pyramid": "Pyramid", "focus-stack": "focus-stack"}
+ENGINES = {"ours depth map": "Depth map", "ours pyramid": "Pyramid", "focus-stack": "focus-stack",
+           "shine pyramid": "Shine Pyr.", "shine depth map": "Shine DMap"}
+OURS = ("ours depth map", "ours pyramid")
 SOFT_TOLERANCE = 2.0
 MADE_UP_TOLERANCE = 0.5
 KEPT_TOLERANCE = 0.03
@@ -69,7 +71,7 @@ for group in ("tune", "holdout", "unregistered"):
                 worse = (-d if better_high else d) > tol
                 fmt = "%.2f -> %.2f (%+.2f)" if i == 0 else "%.1f -> %.1f (%+.1f)"
                 cells.append("%24s" % (fmt % (b[i], n[i], d)))
-                if worse and key != "focus-stack":
+                if worse and key in OURS:
                     flags.append(label)
             mark = "  !! " + ", ".join(flags) if flags else ""
             regressed |= bool(flags)

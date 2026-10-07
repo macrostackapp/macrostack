@@ -94,6 +94,7 @@ Tested on the laptop against [focus-stack](https://github.com/PetteriAimonen/foc
 - **focus-stack** keeps the most fine texture (its wavelet merge boosts contrast past any single frame) but also shows detail that's in none of the frames — blotchy colours, contour bands — in 2–50 % of the picture.
 - **MacroStack** invents almost none (under 1 %). The *Pyramid* is softer than the sharpest frame in 0–9 % of the detailed areas (focus-stack: 0–24 %), the *Depth map*, which trades some fine texture for less noise, in 1–26 %.
 - MacroStack's alignment is as precise as focus-stack's on hand-held frames (0.06 vs 0.07 px between neighbours) and on the phone stack (0.7 vs 0.6 px).
+- [Shine Stacker](https://github.com/lucalista/shinestacker) 1.17, a newer free stacker, was tested the same way (its default settings). Where it aligned the frames, its pyramid kept the most fine contrast, with a few % of made-up detail (up to 14 % on the phone stack); its depth map was sharper than MacroStack's on the phone stack. But its alignment failed on frames with little in focus and skipped them: 4 of 10 frames on one stack, 48 of 50 on the pro macro stack.
 - On the same laptop it's faster: 20 frames of 12 MP in 11–12 s vs 27 s, 50 frames of 17 MP in 33–39 s vs about 190 s (a little flattering, as MacroStack read already-decoded frames).
 
 ## Lenses (3×, 5×, …)

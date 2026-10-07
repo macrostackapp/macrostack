@@ -36,6 +36,7 @@ files = sorted(glob.glob(ppm + "/frame_*.ppm"))
 T = parse_transforms(open(B + tag + "_ours.log").read())[:len(files)]
 dm = Image.open(B + tag + "_depth_map.png").convert("RGB")
 w, h = dm.size
+import os
 
 
 def aligned(k):
@@ -72,6 +73,10 @@ floor = np.percentile(src.min(axis=0), 50)  # what the blurriest frame shows: no
 real = (best > 8 * floor) & (best > 3 * np.median(src, axis=0))
 engines = {"focus-stack": Image.open(B + tag + "_focusstack.png").convert("RGB").crop((left, top, left + w, top + h)),
            "ours depth map": dm, "ours pyramid": Image.open(B + tag + "_pyramid.png").convert("RGB")}
+# Other stackers, if their results are there (they share the middle frame's geometry, uncropped).
+for _name, _label in (("shine_pyramid", "shine pyramid"), ("shine_depth_map", "shine depth map")):
+    if os.path.exists(B + tag + "_" + _name + ".png"):
+        engines[_label] = Image.open(B + tag + "_" + _name + ".png").convert("RGB").crop((left, top, left + w, top + h))
 print("%s: %d frames, %d%% of blocks have real detail (noise floor %.1f)" % (tag, len(files), 100 * real.mean(), floor))
 for name, im in engines.items():
     e = detail(im)
