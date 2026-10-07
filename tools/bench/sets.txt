@@ -1,0 +1,18 @@
+# Test stacks for the engine benchmark (tools/bench/bench_all.sh).
+#
+# name: what scores and work files are called (no spaces).
+# role: tune (used to find and fix flaws) or holdout (only used to check that a fix generalises:
+#   never look at its worst blocks while tuning).
+# frames: a glob, relative to the project folder, in shooting order.
+#
+# A folder in samples\ that isn't listed here can still be benchmarked by its folder name; add it here
+# to make it part of every full run.
+#
+# name       role     frames                                             what it tests
+pcbdm        tune     samples/pcb_depthmap/pcb_00*.JPG                   circuit-board switch, 10 frames, big focus steps, shiny gold pads (focus-stack example, MIT)
+pcb          tune     samples/pcb/pcb_00*.jpg                            circuit-board pins, 7 frames, depth edges over a barcode (focus-stack example, MIT)
+plants       tune     samples/phone_dff/calibration/plants/origs/*.jpg   hand-held phone sweep, 23 frames, 1280x720 (Suwajanakorn et al. 2015)
+fruits       tune     samples/phone_dff/calibration/fruits/origs/*.jpg   hand-held phone sweep, 30 frames (Suwajanakorn et al. 2015)
+keyboard     tune     samples/phone_dff/calibration/keyboard/origs/*.jpg hand-held phone sweep, 32 frames, thin cable and lettering (Suwajanakorn et al. 2015)
+room         tune     samples/Stack_*.jpg                                the user's living-room stack, S24 Ultra 1x, 20 frames: knee, doily, drawer, blanket
+pro          tune     samples/pro_macro/frame_*.tif                      every 20th of a 999-frame Canon R5 II macro stack, 50 frames at 17 MP: banana skin, exposure drift, hot pixels (Johannes Sood, CC BY 4.0)

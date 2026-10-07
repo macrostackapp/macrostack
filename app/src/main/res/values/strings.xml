@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MacroStack</string>
+
+    <!-- Main screen -->
+    <string name="peaking">Focus peaking</string>
+    <string name="magnify">Magnify preview</string>
+    <string name="start">START</string>
+    <string name="end">END</string>
+    <string name="go_start">Move focus to start</string>
+    <string name="go_end">Move focus to end</string>
+    <string name="tap_to_mark">Tap to mark</string>
+    <string name="fewer_frames">Fewer frames</string>
+    <string name="more_frames">More frames</string>
+    <string name="last_stack">Open last stack</string>
+    <string name="settings">Settings</string>
+    <string name="frames_count">%d frames</string>
+    <string name="plan_needs_points">Mark a start and an end on the dial</string>
+    <string name="plan_summary">%1$s%% apart · about %2$s</string>
+    <string name="getting_ready">Getting ready…</string>
+    <string name="saving">Saving…</string>
+    <string name="view">View</string>
+    <string name="no_stacks_yet">No stacks yet. Your last stack will appear here.</string>
+    <string name="no_gallery">No app found to open photos.</string>
+
+    <!-- Messages -->
+    <string name="need_camera_permission">MacroStack needs camera access. Allow it in Android Settings › Apps › MacroStack › Permissions.</string>
+    <string name="no_camera">No rear camera was found.</string>
+    <string name="no_manual_focus">This lens doesn\'t let apps control its focus, so it can\'t focus-stack. Try another lens.</string>
+    <string name="set_points_first">Mark a START and an END first: turn the dial, then tap the cards.</string>
+    <string name="same_points">START and END are at the same spot. Move the dial and mark one again.</string>
+    <string name="no_manual_exposure">This lens doesn\'t allow manual ISO and shutter. Auto exposure is locked for each stack instead.</string>
+    <string name="lens_busy">Stop the stack before switching lenses.</string>
+    <string name="no_raw_on_lens">RAW isn\'t available on this lens, so it\'s saving JPEG instead.</string>
+    <string name="warning_no_mf">No manual focus on this lens</string>
+    <string name="warning_no_raw">No RAW on this lens · saving JPEG</string>
+    <string name="warning_other_lens">Phone is using its %d mm lens</string>
+    <string name="warning_other_lens_detail">At this zoom the phone picked its %1$d mm lens instead of the %2$d mm one. Phones often do this when focusing very close. Photos are a crop of that lens, and RAW files show its whole frame.</string>
+    <string name="format_jpeg_hint">JPEG: ready-to-use photos, small files, fastest bursts.</string>
+    <string name="format_raw_hint">RAW: untouched sensor data (DNG), like Pro mode\'s RAW. Best for editing and stacking. About 24 MB a photo.</string>
+    <string name="format_raw_jpeg_hint">RAW + JPEG: a DNG for stacking, plus a JPEG to check quickly.</string>
+    <string name="mode_fast_hint">Fast: shoots the whole stack as one continuous burst, like a camera\'s focus bracketing.</string>
+    <string name="mode_precise_hint">Precise: stops and checks the lens before every photo. Slower, but use it if Fast gives soft frames.</string>
+    <string name="copied">Copied</string>
+
+    <!-- On-phone stacking -->
+    <string name="stacked_preview">Stacked photo</string>
+    <string name="stacking_preview_soon">The merged photo appears here as it builds</string>
+    <string name="stacking_title_idle">On-phone stacking</string>
+    <string name="stacking_idle">Shoot a stack and the phone merges it into one photo that\'s sharp from front to back. It\'s saved in Pictures/MacroStack/Stacked.</string>
+    <string name="stacking_title_running">Stacking…</string>
+    <string name="stacking_keep_shooting">%d photos · you can keep shooting</string>
+    <string name="stacking_queued">%d more waiting</string>
+    <string name="stacking_aligning">Aligning photos · %1$d of %2$d</string>
+    <string name="stacking_measuring">Finding the sharp parts · %1$d of %2$d</string>
+    <string name="stacking_merging">Merging the sharp parts · %1$d of %2$d</string>
+    <string name="stacking_hide">Hide</string>
+    <string name="stacking_stop">Stop</string>
+    <string name="stacking_title_done">Stacked</string>
+    <string name="stacking_done_summary">%1$d photos merged in %2$s s · %3$s MP</string>
+    <string name="stacking_unaligned">%d photo(s) couldn\'t be aligned. Check the result\'s edges.</string>
+    <string name="stacking_reduced">Merged at a smaller size to fit in memory.</string>
+    <string name="stacking_title_stopped">Stacking stopped</string>
+    <string name="stacking_title_failed">Couldn\'t stack</string>
+    <string name="stacking_retry">Try again</string>
+    <string name="open_in_gallery">Open in Gallery</string>
+    <string name="stacking_started">Stacking on the phone…</string>
+    <string name="stacking_finished">✓ Stacked in %s s</string>
+    <string name="watch">Watch</string>
+    <string name="notification_channel">Stacking progress</string>
+    <string name="section_stacking">STACKING ON THE PHONE</string>
+    <string name="settings_merge_method">Merge method</string>
+    <string name="method_depth_map">Depth map</string>
+    <string name="method_pyramid">Pyramid</string>
+    <string name="method_depth_map_hint">Depth map (like Zerene DMap / Helicon Method B): least noise, and no ghosted outlines if something moved. Best for most stacks.</string>
+    <string name="method_pyramid_hint">Pyramid (like Zerene PMax / Helicon Method C): the finest detail where hairs and bristles cross, but a little noisier, and it can ghost if the subject moved.</string>
+    <string name="stack_last_prompt">Merge your last stack (%s) into one sharp photo.</string>
+    <string name="stack_it">Stack it</string>
+    <string name="open_photos">Open photos</string>
+    <string name="redo_as">Redo as %s</string>
+    <string name="settings_stack_on_phone">Merge each stack into one sharp photo</string>
+    <string name="settings_stack_on_phone_hint">Runs in the background right after shooting, in about 0.6–1 s per photo. The result goes to Pictures/MacroStack/Stacked, and your original frames are kept, so you can still stack them on a laptop.</string>
+
+    <!-- Exposure sheet -->
+    <string name="exposure">Exposure</string>
+    <string name="auto">Auto</string>
+    <string name="manual">Manual</string>
+    <string name="brightness">Brightness (EV)</string>
+    <string name="iso">ISO</string>
+    <string name="shutter">Shutter</string>
+    <string name="exposure_auto_hint">The camera meters the scene, then locks exposure and white balance when the stack starts, so every frame matches.</string>
+    <string name="exposure_manual_hint">Shutter speeds slower than 1/30 s also slow Fast mode down.</string>
+
+    <!-- Settings sheet -->
+    <string name="section_photos">PHOTOS</string>
+    <string name="section_speed">SPEED</string>
+    <string name="section_shooting">SHOOTING</string>
+    <string name="section_peaking">FOCUS PEAKING</string>
+    <string name="section_help">HELP</string>
+    <string name="settings_format">Format</string>
+    <string name="settings_size">Photo size</string>
+    <string name="settings_size_hint">Maximum uses the full sensor (e.g. 50 or 200 MP) but is many times slower.</string>
+    <string name="settings_processing">JPEG processing</string>
+    <string name="settings_quality">JPEG quality</string>
+    <string name="settings_mode">Shooting mode</string>
+    <string name="settings_settle_frames">Lens settle between photos</string>
+    <string name="settings_settle_frames_hint">Frames the focus motor gets to arrive before each photo. Raise this if some frames are soft.</string>
+    <string name="settings_settle">Extra wait per photo</string>
+    <string name="settings_settle_hint">Raise this if some frames are soft or shaky.</string>
+    <string name="settings_delay">Start delay</string>
+    <string name="settings_delay_hint">Lets vibrations from pressing the shutter die down.</string>
+    <string name="settings_volume">Volume keys and Bluetooth remotes start a stack</string>
+    <string name="settings_beep">Beep when a stack is done</string>
+    <string name="settings_ois">Optical stabilization</string>
+    <string name="settings_ois_hint">Turn this off when the phone is on a tripod.</string>
+    <string name="settings_peaking">Sensitivity</string>
+    <string name="settings_peak_color">Color</string>
+
+    <!-- Help -->
+    <string name="help_title">How to shoot a stack</string>
+    <string-array name="help_steps">
+        <item>Tap the lens your macro attachment is clipped onto, and put the phone on a stand.</item>
+        <item>Turn the focus dial until the nearest part of the subject is sharp. Peaking marks sharp edges. Then tap START.</item>
+        <item>Turn it until the farthest part is sharp, then tap END.</item>
+        <item>Pick how many frames, then press the shutter (or a volume key, or a Bluetooth remote). Don\'t touch the phone until it beeps.</item>
+    </string-array>
+    <string name="help_footer">Right after shooting, the phone merges the stack into one sharp photo. Watch it build with the thumbnail next to the shutter. Results go to Pictures/MacroStack/Stacked, and the original frames stay in their own folder for laptop stacking.\n\nTap the strip above the dial to jump across the focus range, and double-tap the preview to magnify.</string>
+    <string name="got_it">Got it</string>
+    <string name="camera_info">Camera info</string>
+    <string name="camera_info_hint">What this phone lets apps do with each lens. Copy it and send it along if something doesn\'t work.</string>
+    <string name="copy">Copy</string>
+    <string name="close">Close</string>
+</resources>

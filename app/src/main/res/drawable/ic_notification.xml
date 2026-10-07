@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The launcher mark in one colour: a lens ring with three focus slices. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M3,12 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0"
+        android:strokeWidth="2"
+        android:strokeColor="#FFFFFFFF" />
+    <path
+        android:pathData="M9.5,8.5 L14.5,8.5 M8,12 L16,12 M9.5,15.5 L14.5,15.5"
+        android:strokeLineCap="round"
+        android:strokeWidth="1.6"
+        android:strokeColor="#FFFFFFFF" />
+</vector>

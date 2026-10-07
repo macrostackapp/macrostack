@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        style="@style/SheetTitle"
+        android:text="@string/settings" />
+
+    <!-- Photos -->
+    <TextView
+        style="@style/SheetSection"
+        android:layout_marginTop="10dp"
+        android:text="@string/section_photos" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_format" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/formatControl"
+        style="@style/Segmented" />
+
+    <TextView
+        android:id="@+id/formatHint"
+        style="@style/SheetHint" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_size" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/sizeControl"
+        style="@style/Segmented" />
+
+    <TextView
+        style="@style/SheetHint"
+        android:text="@string/settings_size_hint" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_processing" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/processingControl"
+        style="@style/Segmented" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_quality" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/qualityControl"
+        style="@style/Segmented" />
+
+    <!-- Speed -->
+    <TextView
+        style="@style/SheetSection"
+        android:text="@string/section_speed" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_mode" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/modeControl"
+        style="@style/Segmented" />
+
+    <TextView
+        android:id="@+id/modeHint"
+        style="@style/SheetHint" />
+
+    <LinearLayout
+        android:id="@+id/settleFramesGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/SheetLabel"
+            android:text="@string/settings_settle_frames" />
+
+        <com.macrostack.app.ui.SegmentedControl
+            android:id="@+id/settleFramesControl"
+            style="@style/Segmented" />
+
+        <TextView
+            style="@style/SheetHint"
+            android:text="@string/settings_settle_frames_hint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settleMsGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/SheetLabel"
+            android:text="@string/settings_settle" />
+
+        <com.macrostack.app.ui.SegmentedControl
+            android:id="@+id/settleMsControl"
+            style="@style/Segmented" />
+
+        <TextView
+            style="@style/SheetHint"
+            android:text="@string/settings_settle_hint" />
+    </LinearLayout>
+
+    <!-- Shooting -->
+    <TextView
+        style="@style/SheetSection"
+        android:text="@string/section_shooting" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_delay" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/delayControl"
+        style="@style/Segmented" />
+
+    <TextView
+        style="@style/SheetHint"
+        android:text="@string/settings_delay_hint" />
+
+    <Switch
+        android:id="@+id/volumeSwitch"
+        style="@style/SheetSwitch"
+        android:layout_marginTop="12dp"
+        android:text="@string/settings_volume" />
+
+    <Switch
+        android:id="@+id/beepSwitch"
+        style="@style/SheetSwitch"
+        android:text="@string/settings_beep" />
+
+    <Switch
+        android:id="@+id/oisSwitch"
+        style="@style/SheetSwitch"
+        android:text="@string/settings_ois" />
+
+    <TextView
+        style="@style/SheetHint"
+        android:layout_marginTop="0dp"
+        android:text="@string/settings_ois_hint" />
+
+    <!-- Stacking on the phone -->
+    <TextView
+        style="@style/SheetSection"
+        android:text="@string/section_stacking" />
+
+    <Switch
+        android:id="@+id/stackSwitch"
+        style="@style/SheetSwitch"
+        android:layout_marginTop="8dp"
+        android:text="@string/settings_stack_on_phone" />
+
+    <TextView
+        style="@style/SheetHint"
+        android:layout_marginTop="0dp"
+        android:text="@string/settings_stack_on_phone_hint" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_merge_method" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/methodControl"
+        style="@style/Segmented" />
+
+    <TextView
+        android:id="@+id/methodHint"
+        style="@style/SheetHint" />
+
+    <!-- Focus peaking -->
+    <TextView
+        style="@style/SheetSection"
+        android:text="@string/section_peaking" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_peaking" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/peakingControl"
+        style="@style/Segmented" />
+
+    <TextView
+        style="@style/SheetLabel"
+        android:text="@string/settings_peak_color" />
+
+    <LinearLayout
+        android:id="@+id/colorSwatches"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" />
+
+    <!-- Help -->
+    <TextView
+        style="@style/SheetSection"
+        android:layout_marginBottom="4dp"
+        android:text="@string/section_help" />
+
+    <TextView
+        android:id="@+id/helpRow"
+        style="@style/SheetRow"
+        android:text="@string/help_title" />
+
+    <TextView
+        android:id="@+id/cameraInfoRow"
+        style="@style/SheetRow"
+        android:text="@string/camera_info" />
+
+    <TextView
+        android:id="@+id/versionText"
+        style="@style/SheetHint"
+        android:layout_marginTop="10dp" />
+</LinearLayout>

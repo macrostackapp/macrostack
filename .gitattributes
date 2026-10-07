@@ -1,0 +1,7 @@
+# Keep the files exactly as they are (LF line endings), so shell scripts and gradlew keep working on Windows.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.jar binary
+*.png binary
+*.jpg binary
+*.webp binary

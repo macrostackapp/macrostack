@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        style="@style/SheetTitle"
+        android:text="@string/exposure" />
+
+    <com.macrostack.app.ui.SegmentedControl
+        android:id="@+id/exposureModeControl"
+        style="@style/Segmented"
+        android:layout_marginTop="12dp" />
+
+    <!-- Auto -->
+    <LinearLayout
+        android:id="@+id/autoGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/brightness"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/evMinus"
+                style="@style/StepButton"
+                android:text="−" />
+
+            <TextView
+                android:id="@+id/evValue"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:fontFeatureSettings="tnum"
+                android:gravity="center"
+                android:textColor="@color/text"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/evPlus"
+                style="@style/StepButton"
+                android:text="+" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/SheetHint"
+            android:layout_marginTop="12dp"
+            android:text="@string/exposure_auto_hint" />
+    </LinearLayout>
+
+    <!-- Manual -->
+    <LinearLayout
+        android:id="@+id/manualGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/iso"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/isoMinus"
+                style="@style/StepButton"
+                android:text="−" />
+
+            <TextView
+                android:id="@+id/isoValue"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:fontFeatureSettings="tnum"
+                android:gravity="center"
+                android:textColor="@color/text"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/isoPlus"
+                style="@style/StepButton"
+                android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/shutter"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/shutterMinus"
+                style="@style/StepButton"
+                android:text="−" />
+
+            <TextView
+                android:id="@+id/shutterValue"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:fontFeatureSettings="tnum"
+                android:gravity="center"
+                android:textColor="@color/text"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/shutterPlus"
+                style="@style/StepButton"
+                android:text="+" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/SheetHint"
+            android:layout_marginTop="12dp"
+            android:text="@string/exposure_manual_hint" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/liveReadout"
+        style="@style/SheetHint"
+        android:layout_marginTop="14dp"
+        android:fontFeatureSettings="tnum"
+        android:textColor="@color/text_secondary" />
+</LinearLayout>

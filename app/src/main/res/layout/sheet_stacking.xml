@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/stackingTitle"
+        style="@style/SheetTitle" />
+
+    <TextView
+        android:id="@+id/stackingSubtitle"
+        style="@style/SheetHint"
+        android:layout_marginTop="0dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <FrameLayout
+        android:id="@+id/stackingImageFrame"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_segmented">
+
+        <ImageView
+            android:id="@+id/stackingImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/stacked_preview"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/stackingPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/stacking_preview_soon"
+            android:textColor="@color/text_tertiary"
+            android:textSize="13sp" />
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/stackingProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginTop="14dp"
+        android:max="1000"
+        android:progressBackgroundTint="@color/surface_high"
+        android:progressTint="@color/accent" />
+
+    <TextView
+        android:id="@+id/stackingStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFeatureSettings="tnum"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/stackingSecondary"
+            style="@style/SheetButton" />
+
+        <Space
+            android:id="@+id/stackingButtonGap"
+            android:layout_width="10dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/stackingPrimary"
+            style="@style/SheetButton.Primary" />
+    </LinearLayout>
+</LinearLayout>

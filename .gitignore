@@ -1,0 +1,18 @@
+.gradle/
+.idea/
+.kotlin/
+build/
+local.properties
+*.iml
+captures/
+
+# Not code (too big, downloaded, or rebuilt from the source):
+# test stacks, downloaded tools, benchmark work files, the built APK
+samples/
+tools/focus-stack/
+tools/focus-stack_Windows.zip
+tools/shinestacker-env/
+tools/shinestacker-install.log
+tools/bench/work/
+MacroStack.apk
+__pycache__/

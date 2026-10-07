@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <!-- ===================== Viewfinder ===================== -->
+    <FrameLayout
+        android:id="@+id/previewArea"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.macrostack.app.ui.AspectFrameLayout
+            android:id="@+id/previewFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <FrameLayout
+                android:id="@+id/zoomLayer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextureView
+                    android:id="@+id/textureView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+        </com.macrostack.app.ui.AspectFrameLayout>
+
+        <!-- Top: lenses on the left, focus aids on the right. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="top"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Lens buttons (0.6× 1× 3× 5×…), filled in from code. -->
+                <LinearLayout
+                    android:id="@+id/lensChips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_pill"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="3dp" />
+
+                <!-- Only shown when something about the lens needs attention. -->
+                <TextView
+                    android:id="@+id/lensWarning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_warning_chip"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:maxWidth="260dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/accent"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/peakingButton"
+                style="@style/RoundIconButton"
+                android:contentDescription="@string/peaking"
+                android:src="@drawable/ic_peaking" />
+
+            <TextView
+                android:id="@+id/zoomButton"
+                style="@style/Chip"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chip_round"
+                android:contentDescription="@string/magnify"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="1×" />
+        </LinearLayout>
+
+        <!-- Messages: fade in, fade out. -->
+        <LinearLayout
+            android:id="@+id/notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="58dp"
+            android:background="@drawable/bg_notice"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="10dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/noticeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lineSpacingExtra="2dp"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/noticeAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.06"
+                android:textAllCaps="true"
+                android:textColor="@color/accent"
+                android:textSize="13sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Countdown. -->
+        <TextView
+            android:id="@+id/countdownText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:shadowColor="#CC000000"
+            android:shadowRadius="16"
+            android:textColor="@color/text"
+            android:textSize="110sp"
+            android:visibility="gone" />
+
+        <!-- Frame counter while shooting. -->
+        <TextView
+            android:id="@+id/stackCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/bg_notice"
+            android:fontFamily="sans-serif-medium"
+            android:fontFeatureSettings="tnum"
+            android:paddingLeft="18dp"
+            android:paddingTop="8dp"
+            android:paddingRight="18dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <!-- Bottom: what will be shot, and how. -->
+        <LinearLayout
+            android:id="@+id/captureChips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/exposureChip"
+                style="@style/Chip"
+                android:contentDescription="@string/exposure"
+                android:drawableStart="@drawable/ic_sun"
+                android:ellipsize="end"
+                android:maxWidth="210dp"
+                android:drawablePadding="6dp"
+                android:drawableTint="@color/accent"
+                android:fontFeatureSettings="tnum" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/formatChip"
+                style="@style/Chip" />
+
+            <TextView
+                android:id="@+id/modeChip"
+                style="@style/Chip"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- ===================== Controls ===================== -->
+    <LinearLayout
+        android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/panel"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="12dp">
+
+        <com.macrostack.app.ui.FocusDial
+            android:id="@+id/focusDial"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
+        <!-- START / END: tap the card to mark, tap the target to go there. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/startCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_point_start"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/setStartButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_ripple_rounded"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp">
+
+                    <TextView
+                        style="@style/PointTitle"
+                        android:drawableStart="@drawable/dot_start"
+                        android:text="@string/start" />
+
+                    <TextView
+                        android:id="@+id/startValue"
+                        style="@style/PointValue" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/goStartButton"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_ripple_rounded"
+                    android:clickable="true"
+                    android:contentDescription="@string/go_start"
+                    android:focusable="true"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_target"
+                    android:tint="@color/start" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:id="@+id/endCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_point_end"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/setEndButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_ripple_rounded"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp">
+
+                    <TextView
+                        style="@style/PointTitle"
+                        android:drawableStart="@drawable/dot_end"
+                        android:text="@string/end" />
+
+                    <TextView
+                        android:id="@+id/endValue"
+                        style="@style/PointValue" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/goEndButton"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_ripple_rounded"
+                    android:clickable="true"
+                    android:contentDescription="@string/go_end"
+                    android:focusable="true"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_target"
+                    android:tint="@color/end" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Frames. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/framesMinus"
+                style="@style/StepButton"
+                android:contentDescription="@string/fewer_frames"
+                android:text="−" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/framesValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:fontFeatureSettings="tnum"
+                    android:textColor="@color/text"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/planInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:maxLines="1"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/framesPlus"
+                style="@style/StepButton"
+                android:contentDescription="@string/more_frames"
+                android:text="+" />
+        </LinearLayout>
+
+        <!-- Last stack · shutter · settings. -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:layout_marginTop="10dp">
+
+            <FrameLayout
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="3dp">
+
+                <ImageView
+                    android:id="@+id/lastStackButton"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_oval"
+                    android:clickable="true"
+                    android:contentDescription="@string/last_stack"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_gallery"
+                    android:tint="@color/text_secondary" />
+
+                <!-- Fills while the phone is stacking the last stack. -->
+                <com.macrostack.app.ui.RingProgressView
+                    android:id="@+id/stackingRing"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <com.macrostack.app.ui.ShutterButton
+                android:id="@+id/shutterButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center" />
+
+            <ImageView
+                android:id="@+id/settingsButton"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_circle_button"
+                android:clickable="true"
+                android:contentDescription="@string/settings"
+                android:focusable="true"
+                android:padding="14dp"
+                android:src="@drawable/ic_settings" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

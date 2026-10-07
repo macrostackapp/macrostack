@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Surfaces, darkest to lightest. -->
+    <color name="bg">#FF000000</color>
+    <color name="panel">#FF0F1114</color>
+    <color name="surface">#FF1A1D22</color>
+    <color name="surface_high">#FF262A31</color>
+    <color name="outline">#FF2F343C</color>
+
+    <color name="text">#FFF4F5F7</color>
+    <color name="text_secondary">#FFA0A6AE</color>
+    <color name="text_tertiary">#FF6B7179</color>
+    <color name="on_accent">#FF141414</color>
+
+    <color name="accent">#FFFFC23D</color>
+    <color name="accent_soft">#33FFC23D</color>
+    <color name="start">#FF4ADE80</color>
+    <color name="end">#FF60A5FA</color>
+    <color name="danger">#FFFF5A5F</color>
+    <color name="danger_soft">#E6331416</color>
+
+    <!-- Translucent chips over the preview. -->
+    <color name="scrim">#99000000</color>
+    <color name="scrim_strong">#CC0B0C0E</color>
+    <color name="icon_bg">#FF14161A</color>
+</resources>

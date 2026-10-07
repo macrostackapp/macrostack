@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        style="@style/SheetTitle"
+        android:text="@string/help_title" />
+
+    <!-- Steps are added from code. -->
+    <LinearLayout
+        android:id="@+id/helpSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical" />
+
+    <TextView
+        style="@style/SheetHint"
+        android:layout_marginTop="16dp"
+        android:text="@string/help_footer"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/helpCameraInfo"
+            style="@style/SheetButton"
+            android:text="@string/camera_info" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/helpDone"
+            style="@style/SheetButton.Primary"
+            android:text="@string/got_it" />
+    </LinearLayout>
+</LinearLayout>

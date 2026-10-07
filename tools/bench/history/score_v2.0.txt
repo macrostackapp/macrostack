@@ -1,0 +1,28 @@
+pcbdm: 10 frames, 59% of blocks have real detail (noise floor 3.7)
+  focus-stack     kept median 1.15, soft (<0.7)  5.1%, made-up detail 17.3%
+  ours depth map  kept median 1.00, soft (<0.7)  2.0%, made-up detail  0.3%
+  ours pyramid    kept median 0.97, soft (<0.7)  1.7%, made-up detail  0.4%
+pcb: 7 frames, 89% of blocks have real detail (noise floor 6.9)
+  focus-stack     kept median 1.32, soft (<0.7)  3.3%, made-up detail 26.8%
+  ours depth map  kept median 1.00, soft (<0.7)  3.5%, made-up detail  0.6%
+  ours pyramid    kept median 0.91, soft (<0.7)  6.2%, made-up detail  0.5%
+plants: 23 frames, 36% of blocks have real detail (noise floor 16.3)
+  focus-stack     kept median 1.24, soft (<0.7)  1.4%, made-up detail  5.0%
+  ours depth map  kept median 0.90, soft (<0.7)  0.7%, made-up detail  0.1%
+  ours pyramid    kept median 0.95, soft (<0.7)  2.4%, made-up detail  0.4%
+fruits: 30 frames, 23% of blocks have real detail (noise floor 14.1)
+  focus-stack     kept median 1.16, soft (<0.7)  0.0%, made-up detail  2.3%
+  ours depth map  kept median 0.82, soft (<0.7)  6.9%, made-up detail  0.0%
+  ours pyramid    kept median 0.95, soft (<0.7)  0.0%, made-up detail  0.0%
+keyboard: 32 frames, 64% of blocks have real detail (noise floor 19.4)
+  focus-stack     kept median 1.20, soft (<0.7)  0.6%, made-up detail  1.6%
+  ours depth map  kept median 0.84, soft (<0.7)  6.4%, made-up detail  0.0%
+  ours pyramid    kept median 0.96, soft (<0.7)  1.0%, made-up detail  0.0%
+room: 20 frames, 63% of blocks have real detail (noise floor 49.6)
+  focus-stack     kept median 1.30, soft (<0.7)  0.0%, made-up detail 13.4%
+  ours depth map  kept median 0.89, soft (<0.7) 10.7%, made-up detail  0.0%
+  ours pyramid    kept median 0.97, soft (<0.7)  0.2%, made-up detail  0.1%
+pro: 50 frames, 1% of blocks have real detail (noise floor 8.5)
+  focus-stack     kept median 1.15, soft (<0.7) 24.4%, made-up detail 50.0%
+  ours depth map  kept median 1.00, soft (<0.7) 26.1%, made-up detail  0.0%
+  ours pyramid    kept median 0.83, soft (<0.7)  8.9%, made-up detail  0.2%
