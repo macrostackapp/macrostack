@@ -1,0 +1,56 @@
+name: Share a focus stack
+description: Send a stack of frames to test and improve the stacking engine. Everyone who helps is credited.
+title: "Stack: "
+labels: ["test stack"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Every stack is added to the engine's test set, and every change to the engine is checked
+        against all of them. Your photos are only used for testing, and shown publicly only if you allow it below.
+
+        **What to send:** the original frames (JPEG, TIFF or RAW), not resized or edited, in shooting order,
+        around 10–50 frames. Any camera or phone. Zip the folder and upload it to Google Drive, Dropbox,
+        WeTransfer or similar, and paste the link here.
+  - type: input
+    id: credit
+    attributes:
+      label: Credit as
+      description: The name to credit you with (or "anonymous").
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link to the frames
+      description: Make sure the link works without signing in.
+      placeholder: https://drive.google.com/...
+    validations:
+      required: true
+  - type: input
+    id: gear
+    attributes:
+      label: Camera or phone, and lens
+      placeholder: Galaxy S24 Ultra + clip-on macro lens, Canon R5 + MP-E 65, ...
+  - type: textarea
+    id: subject
+    attributes:
+      label: The subject, and what's hard about it
+      description: Optional, but it helps. Did a stacker get it wrong? Which one, and where?
+      placeholder: A fly's head. Helicon left halos around the hairs on the left.
+  - type: dropdown
+    id: public
+    attributes:
+      label: May crops of your stack be shown on the website or in the project (with your credit)?
+      options:
+        - "Yes"
+        - "No, testing only"
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Permission
+      options:
+        - label: I took these photos, and they may be used to test and improve MacroStack.
+          required: true

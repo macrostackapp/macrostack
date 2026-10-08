@@ -1,7 +1,8 @@
 #!/bin/sh
 # usage: bench.sh PPM_DIR TAG [METHODS]  -> tools/bench/work/bench/TAG_{depth_map,pyramid}.png (+ _depth), timing in TAG_ours.log
-S=C:/dev/macro-app/tools/bench/work
-cd /c/dev/macro-app
+ROOT=$(cd "$(dirname "$0")/../.." && pwd)
+S=$ROOT/tools/bench/work
+cd "$ROOT"
 export MACROSTACK_REAL="$1"
 export MACROSTACK_METHODS="${3:-DEPTH_MAP,PYRAMID}"
 unset MACROSTACK_PROBE

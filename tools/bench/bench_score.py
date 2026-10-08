@@ -8,12 +8,13 @@ engine did), versus what each engine's result has. Detail is measured at two sca
 usage: python bench_score.py TAG LEFT TOP PPM_DIR [BLOCK=32]
 """
 import glob
+import os
 import re
 import sys
 import numpy as np
 from PIL import Image
 
-B = "C:/dev/macro-app/tools/bench/work/bench/"
+B = os.path.join(os.path.dirname(os.path.abspath(__file__)), "work", "bench").replace("\\", "/") + "/"
 tag, ppm = sys.argv[1], sys.argv[4]
 _log = open(B + tag + "_ours.log").read()
 _m = re.search(r"crop IntRect\(left=(\d+), top=(\d+)", _log)
@@ -36,7 +37,6 @@ files = sorted(glob.glob(ppm + "/frame_*.ppm"))
 T = parse_transforms(open(B + tag + "_ours.log").read())[:len(files)]
 dm = Image.open(B + tag + "_depth_map.png").convert("RGB")
 w, h = dm.size
-import os
 
 
 def aligned(k):

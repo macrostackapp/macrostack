@@ -73,12 +73,12 @@ flat noise 8.6 / 12.6 (single frame 22.6), occluder ring 24.5 / 26.6 dB (Depth m
 
 - Hot-pixel removal (flaw 1).
 - Depth-map texture with coarse focus steps (flaw 2).
-- Compare against **enfuse** (Hugin) too — download needs the user's OK. Shine Stacker is in the benchmark
+- Compare against **enfuse** (Hugin) too — download needs the maintainer's OK. Shine Stacker is in the benchmark
   since 2026-10-08 (`tools/shinestacker-env`).
-- The user's studio stacks (shot list: hairy subject, dark edge on bright and bright on dark, shiny,
+- The maintainer's studio stacks (shot list: hairy subject, dark edge on bright and bright on dark, shiny,
   backlit, tilted text page, same subject with fine and coarse steps, stack ending early, low light / hot
   pixels, LED flicker, tripod vs hand-held, slight motion, clip-on lens at max magnification, 3× lens).
-- RAW input (deferred by the user): 16-bit pipeline, DNG development, stacking in linear light, 16-bit TIFF
+- RAW input (deferred by the maintainer): 16-bit pipeline, DNG development, stacking in linear light, 16-bit TIFF
   out. Today a DNG-only stack is decoded to 8 bits by Android with default settings.
 - Unused test data on disk: `samples/phone_dff` scenes balls, bottles, metal, telephone, window.
 - Retouch brush (paint a frame's detail back in) — the feature people pay Zerene/Helicon for.
@@ -111,11 +111,13 @@ flat noise 8.6 / 12.6 (single frame 22.6), occluder ring 24.5 / 26.6 dB (Depth m
 
 ## History
 
+- **v2.0.1** (2026-10-08): first public release (GitHub, GPL-3.0, signed with the release key). No engine
+  change; v2.0's scores still apply.
 - **v2.0** (2026-10-07): benchmarked against focus-stack on 7 stacks. Steeper depth-map blend on detail;
   garrote denoise; affine, robust, larger-copy alignment without the breathing fit; exposure matching;
   one-sided usual-brightness rule for coarse evidence (white blobs in dark gaps). Laptop speed about the
   same as v1.9 (alignment parallelised).
-- **v1.9** (2026-10-05): tuned on the user's 20-frame room stack. Shared detail for weak evidence, glow
+- **v1.9** (2026-10-05): tuned on the maintainer's 20-frame room stack. Shared detail for weak evidence, glow
   steadiness, coarse never-sharp fallback; Pyramid guided by a depth-map pre-pass.
 - **v1.8**: per-brightness noise model, noise subtraction, weighted-median depth, brightness-consistent plateau.
 - **v1.7**: method names Depth map / Pyramid; foreground stacking service; EXIF copied to results.

@@ -12,7 +12,7 @@ import time
 
 from PIL import Image
 
-WORK = "C:/dev/macro-app/tools/bench/work"
+WORK = os.path.join(os.path.dirname(os.path.abspath(__file__)), "work").replace("\\", "/")
 tag, frames = sys.argv[1], sys.argv[2:]
 job_dir = os.path.join(WORK, "shine", tag)
 inputs = os.path.join(job_dir, "frames")

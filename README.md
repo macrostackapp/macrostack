@@ -1,15 +1,35 @@
 # MacroStack
 
-Focus bracketing for Android phones. It does what a camera's focus-shift / focus-bracketing mode does: you set a **start** and an **end** focus point and a number of frames, and the app sweeps the focus motor through them, shooting a full-resolution photo at each step. By default the whole stack is shot as one continuous burst. Each stack goes into its own folder, ready to copy to a laptop and stack.
+**Focus stacking, shot and merged on your phone.** MacroStack is a free, open-source Android camera for macro
+photography. It sweeps the focus through your subject in one fast burst, like a camera's focus-bracketing
+mode (up to 21 frames per second on a Galaxy S24 Ultra), then aligns and merges the frames on the phone into
+one photo that's sharp from front to back.
 
-It replaces the Pro-mode + autoclicker workflow.
+[Website](https://macrostackapp.github.io/macrostack/) ·
+[Download the APK](https://github.com/macrostackapp/macrostack/releases/latest) ·
+[Share a test stack](https://github.com/macrostackapp/macrostack/issues/new?template=share-stack.yml) ·
+[Report a problem](https://github.com/macrostackapp/macrostack/issues/new?template=problem.yml)
+
+![One frame (left) and MacroStack's result from 7 frames (right)](site/img/og.jpg)
+
+- **Shoot:** set the nearest and farthest focus points and the number of frames. The app drives the focus
+  motor through even steps in one continuous burst, with exposure and white balance locked. JPEG or RAW (DNG).
+- **Align:** focus breathing, hand-held shift and tilt, and flickering light are corrected frame by frame.
+- **Stack:** two merge methods, *Depth map* and *Pyramid*, like the best desktop stacking programs. It runs in
+  the background while you keep shooting. The engine is plain Kotlin, running on the phone's own processor.
+
+It replaces the Pro-mode + autoclicker workflow. Each stack also keeps its original frames in their own
+folder, ready for Helicon Focus, Zerene Stacker or Photoshop.
 
 ## Install
 
-`MacroStack.apk` is in this folder (Android 10 or newer). Installing over an older version keeps your settings.
+On the phone (Android 10 or newer), download `MacroStack.apk` from the
+[latest release](https://github.com/macrostackapp/macrostack/releases/latest), open it, and allow "Install
+unknown apps" when Android asks. Installing a newer version over it keeps your settings.
 
-- **Easiest:** copy `MacroStack.apk` to the phone (USB, Google Drive, etc.), open it, and allow "Install unknown apps" when Android asks.
-- **With USB debugging on:** `adb install -r MacroStack.apk`
+MacroStack is developed and tested on a Samsung Galaxy S24 Ultra with a clip-on macro lens. It needs a phone
+that lets apps set the focus manually; **⚙ → Camera info** shows what yours allows. If it doesn't work on
+your phone, [tell us](https://github.com/macrostackapp/macrostack/issues/new?template=problem.yml).
 
 ## The screen
 
@@ -96,6 +116,10 @@ Tested on the laptop against [focus-stack](https://github.com/PetteriAimonen/foc
 - MacroStack's alignment is as precise as focus-stack's on hand-held frames (0.06 vs 0.07 px between neighbours) and on the phone stack (0.7 vs 0.6 px).
 - [Shine Stacker](https://github.com/lucalista/shinestacker) 1.17, a newer free stacker, was tested the same way (its default settings). Where it aligned the frames, its pyramid kept the most fine contrast, with a few % of made-up detail (up to 14 % on the phone stack); its depth map was sharper than MacroStack's on the phone stack. But its alignment failed on frames with little in focus and skipped them: 4 of 10 frames on one stack, 48 of 50 on the pro macro stack.
 - On the same laptop it's faster: 20 frames of 12 MP in 11–12 s vs 27 s, 50 frames of 17 MP in 33–39 s vs about 190 s (a little flattering, as MacroStack read already-decoded frames).
+
+The full table and close-ups are on the [website](https://macrostackapp.github.io/macrostack/#results). The
+benchmark scripts are in [`tools/bench/`](tools/bench/), so the comparison can be rerun, and each version's
+scores are kept in [`tools/bench/history/`](tools/bench/history/).
 
 ## Lenses (3×, 5×, …)
 
@@ -194,16 +218,50 @@ Code layout (`app/src/main/java/com/macrostack/app/`):
 
 ## Building
 
-Requires JDK 17 and the Android SDK (path in `local.properties`).
+Requires JDK 17 and the Android SDK (its path in `local.properties`, or `ANDROID_HOME`).
 
 ```bash
-./gradlew assembleDebug testDebugUnitTest
+./gradlew testDebugUnitTest lintDebug assembleDebug
 ```
 
-The APK is written to `app/build/outputs/apk/debug/app-debug.apk`.
+The APK is written to `app/build/outputs/apk/debug/app-debug.apk`. Release builds (`assembleRelease`) are
+signed with the key named in `keystore.properties`, which isn't in the repository; without it they come out
+unsigned.
 
 ## Possible next steps
 
 - Handling subjects that move a lot (local, per-region alignment)
 - Wi-Fi transfer of a finished stack straight to the laptop
 - Auto-suggested frame count from a quick test sweep
+
+## Help improve the engine
+
+The engine gets better by finding the stacks it gets wrong.
+[Share a focus stack](https://github.com/macrostackapp/macrostack/issues/new?template=share-stack.yml): any
+camera or phone, the original frames in shooting order. Each one joins the test set, every change to the
+engine is checked against all of them, and everyone who helps is credited in
+[`docs/CONTRIBUTORS.md`](docs/CONTRIBUTORS.md) and on the website.
+
+Code contributions are welcome too; for anything big, open an issue first.
+[`docs/ENGINE_LOG.md`](docs/ENGINE_LOG.md) is the engine's lab notebook: where it stands, known flaws, and what
+was tried and didn't work.
+
+## Credits
+
+Made by Bakkori, with the help of Claude (Anthropic).
+
+- Test stacks: Petteri Aimonen (focus-stack's examples, MIT); Johannes Sood (a Canon R5 II macro stack,
+  [CC BY 4.0](https://huggingface.co/datasets/jjjsood/focus-stack-sample)); Supasorn Suwajanakorn, Carlos
+  Hernández and Steven M. Seitz (*Depth from Focus with Your Mobile Phone*, CVPR 2015).
+- Compared against [focus-stack](https://github.com/PetteriAimonen/focus-stack) by Petteri Aimonen and
+  [Shine Stacker](https://github.com/lucalista/shinestacker) by Luca Lista.
+- Photographers who shared stacks: see [`docs/CONTRIBUTORS.md`](docs/CONTRIBUTORS.md).
+
+## Licence
+
+Copyright (C) 2026 Bakkori.
+
+MacroStack is free software: you can redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
+option) any later version. It is distributed in the hope that it will be useful, but without any warranty.
+See [`LICENSE`](LICENSE).

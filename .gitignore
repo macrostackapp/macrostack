@@ -16,3 +16,11 @@ tools/shinestacker-install.log
 tools/bench/work/
 MacroStack.apk
 __pycache__/
+
+# Private: the release signing key and its passwords (back them up, never commit them),
+# and machine-specific notes for Claude
+keystore/
+keystore.properties
+*.jks
+*.keystore
+CLAUDE.local.md

@@ -1,55 +1,65 @@
 # MacroStack — working notes for Claude
 
-MacroStack is an Android focus-bracketing camera with its own on-phone focus-stacking engine, built for
-the user's **Samsung Galaxy S24 Ultra** (clip-on macro lens). The user is a macro photographer, not a
-programmer: explain results in photographer terms (sharpness, halos, noise, ghosting), not code. They want
-to pick the work up in any new session without re-explaining. Everything needed is in this file,
-`docs/ENGINE_LOG.md` and `tools/bench/`.
+MacroStack is an open-source (GPL-3.0) Android focus-bracketing camera with its own on-phone
+focus-stacking engine, developed and tested on a **Samsung Galaxy S24 Ultra** with a clip-on macro lens.
+Everything needed to continue the work is in this file, `docs/ENGINE_LOG.md` and `tools/bench/`.
+
+Machine- and maintainer-specific notes (paths, accounts, the signing key, what needs the maintainer's OK)
+are in `CLAUDE.local.md`, which is not in git. Read it first if it exists.
 
 ## Layout
 
 - `app/src/main/java/com/macrostack/app/` — the app. `fusion/` is the stacking engine (pure Kotlin, no
   Android code): `StackFusion.kt` pipeline, `Aligner.kt`, `Warp.kt`, `DepthMapFuser.kt`, `PyramidFuser.kt`.
-  `README.md` describes the app and how the engine works, for the user.
+  `README.md` describes the app and how the engine works, for users.
 - `app/src/test/.../fusion/` — `FusionTest` (synthetic stacks with a known answer; must keep passing),
   `RealStackTest` (opt-in, real frames; see its doc comment for the env vars).
 - `docs/ENGINE_LOG.md` — engine status, benchmark baseline, known flaws, backlog, what didn't work, history.
   **Read it first** for any engine work; update it after every change.
+- `docs/CONTRIBUTORS.md` — everyone who sent test stacks, and the datasets used, with their licences.
 - `tools/bench/` — benchmark against other stackers (README there); `sets.txt` lists the test stacks;
   `history/` keeps each version's scores; `work/` is disposable.
 - `tools/focus-stack/` — focus-stack 1.5 for Windows (MIT), and `tools/shinestacker-env/` — Shine Stacker 1.17
   (Python, its own environment): the comparison engines. Both run automatically in the benchmark.
 - `samples/` — test stacks (large, not code). Licences: `pro_macro` CC BY 4.0, credit Johannes Sood if
-  shown anywhere; `pcb*` from focus-stack (MIT); `phone_dff` research data (Suwajanakorn et al. 2015).
+  shown anywhere; `pcb*` from focus-stack (MIT); `phone_dff` research data (Suwajanakorn et al. 2015), not
+  to be republished.
+- `site/` — the project website (static HTML, no build step), deployed to GitHub Pages.
+- `.github/` — the Pages workflow and the issue forms (sharing a stack, reporting a problem).
 
-## Version history (git)
+## Versions and releases
 
-- Local git repository, no remote (the user asked for local version history only; nothing is uploaded).
-  Each finished version is one commit on `main`, tagged `vX.Y`. The user approved committing finished
-  versions this way. Ask before anything else (pushing, rewriting history, deleting tags).
+- Each finished version is one commit on `main`, tagged `vX.Y` (or `vX.Y.Z`), and published as a GitHub
+  release with the signed APK attached as `MacroStack-X.Y.apk`.
 - Not tracked (see `.gitignore`): `samples/` (test stacks, 2 GB), `tools/focus-stack/` (focus-stack 1.5 for
   Windows from github.com/PetteriAimonen/focus-stack/releases), `tools/shinestacker-env/` (`python -m venv`
-  + `pip install shinestacker`), `tools/bench/work/`, `MacroStack.apk`. If a tool is missing, re-getting it
-  needs the user's OK (it's a download).
+  + `pip install shinestacker`), `tools/bench/work/`, `MacroStack.apk`, the signing key (`keystore/`,
+  `keystore.properties`) and `CLAUDE.local.md`. Re-getting a missing tool is a download: ask first.
 - `.gitattributes` keeps LF line endings (shell scripts break with CRLF).
 
-## Build, test, deliver
+## Build, test, release
 
-- JDK 17 (`C:\Program Files\Eclipse Adoptium\jdk-17.0.20.8-hotspot`), Android SDK `C:\Users\abuba\Android`.
-- `./gradlew testDebugUnitTest lintDebug assembleDebug` — tests must pass, lint must have 0 errors.
-- Deliver: bump `versionCode`/`versionName` in `app/build.gradle.kts`, copy
-  `app/build/outputs/apk/debug/app-debug.apk` to `MacroStack.apk` in the project folder, send it to the user.
-- No phone or emulator on this laptop: UI and camera code can't be run here. The user installs the APK and
-  reports back (screenshots, Settings → Camera info → Copy).
+- JDK 17 and the Android SDK (`local.properties`).
+- `./gradlew testDebugUnitTest lintDebug assembleRelease` — tests must pass, lint must have 0 errors.
+  The release APK (`app/build/outputs/apk/release/app-release.apk`) is signed with the key named in
+  `keystore.properties`; without that file it comes out unsigned. Android only installs an update signed
+  with the same key as the installed app, so that key must never change.
+- A release: bump `versionCode`/`versionName` in `app/build.gradle.kts`, build, commit, tag, then
+  `gh release create vX.Y MacroStack-X.Y.apk --title "MacroStack X.Y" --notes ...`. Update the test results on
+  the website (`site/index.html`, from `tools/bench/history/`) when the engine changed.
+- No phone or emulator in the development setup: UI and camera code can't be run here. Testers install the
+  APK and report back (screenshots, Settings → Camera info → Copy).
+- Website images must be the maintainer's own photos, or credited as their licence requires
+  (`docs/CONTRIBUTORS.md`); contributors' stacks only with their permission.
 
 ## The engine improvement loop
 
-When the user says to continue improving the engine, or adds new stacks to `samples\` (also: `/improve-engine`):
+When asked to continue improving the engine, or when new stacks appear in `samples\` (also: `/improve-engine`):
 
 1. **Catch up.** Read `docs/ENGINE_LOG.md` (flaws, backlog, what didn't work) and `tools/bench/sets.txt`.
    Look for new folders in `samples\` and register each in `sets.txt` (about one in three as `holdout`;
    never tune on holdout sets' worst blocks). Stacks from other photographers: record who sent them in
-   `docs/CONTRIBUTORS.md` (everyone who helps is credited; ask the user for anything missing).
+   `docs/CONTRIBUTORS.md` (everyone who helps is credited; ask the maintainer for anything missing).
 2. **Baseline.** `sh tools/bench/bench_all.sh <label>` (all sets; new ones get focus-stack run once) and
    `python tools/bench/compare_scores.py tools/bench/history/<latest>.txt tools/bench/work/bench/score_<label>.txt`.
 3. **Find flaws** on tune sets: worst-block sheets (`bench_score.py SET auto 0 tools/bench/work/ppm_SET 32 dm|py 6`),
@@ -62,8 +72,8 @@ When the user says to continue improving the engine, or adds new stacks to `samp
    it was tuned on, rethink it.
 6. **Record**: copy the score file to `tools/bench/history/score_v<version>.txt`; update `docs/ENGINE_LOG.md`
    (baseline table, flaws, backlog, tried-and-failed, history line) and, if the user-facing behaviour
-   changed, `README.md`; bump the version; build and deliver the APK; show the user a before/after crop
-   sheet of the spots that changed.
+   changed, `README.md` and the website; bump the version; build the APK; show a before/after crop sheet
+   of the spots that changed.
 
 ## Gotchas
 
@@ -71,11 +81,11 @@ When the user says to continue improving the engine, or adds new stacks to `samp
   (`tools/bench/bench.sh` does it). Never run two Gradle builds at once, and don't edit a script while a
   background job is running it.
 - Stopping a background benchmark can leave its child processes (`sh bench_all.sh`, Gradle, python)
-  running, and a second run then writes the same files. Check with PowerShell
+  running, and a second run then writes the same files. On Windows check with PowerShell
   `Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'bench_all|RealStackTest' }` and
   end them with `taskkill /PID <id> /T /F`.
 - Long Python heredocs in Bash get mangled (`\n`, `\t`, `\b` escapes): write scripts to a file and run them.
   Never write Android string resources through a heredoc.
 - Don't leave the shell's working directory inside `app/build` (`gradlew clean` then fails).
 - Android unit tests can't use AWT/ImageIO: `SyntheticStack` draws procedurally and has its own PNG writer.
-- Downloading anything (tools, datasets) needs the user's OK first: say the file, source and size.
+- Downloading anything (tools, datasets) needs the maintainer's OK first: say the file, source and size.

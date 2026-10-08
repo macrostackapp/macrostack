@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How to use the app
+    url: https://github.com/macrostackapp/macrostack#readme
+    about: The manual covers shooting a stack, lenses, RAW, speed settings and stacking on the phone.

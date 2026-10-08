@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MacroStack: focus stacking on your phone</title>
+<meta name="description" content="A free, open-source Android camera that shoots a focus bracket in one fast burst and stacks it into one sharp photo, right on the phone.">
+<meta name="theme-color" content="#0f1114">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MacroStack: focus stacking on your phone">
+<meta property="og:description" content="A free, open-source Android camera that shoots a focus bracket in one fast burst and stacks it into one sharp photo, right on the phone.">
+<meta property="og:url" content="https://macrostackapp.github.io/macrostack/">
+<meta property="og:image" content="https://macrostackapp.github.io/macrostack/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0f1114;
+    --surface: #171a1f;
+    --surface-2: #1e2228;
+    --line: #2a2f37;
+    --text: #e9ebee;
+    --muted: #a3a9b3;
+    --accent: #ffc23d;
+    --on-accent: #141414;
+    --bad: #ff8a7a;
+    --radius: 14px;
+    --max: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+  /* Header */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(15, 17, 20, .86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+  .brand img { width: 30px; height: 30px; }
+  nav { margin-left: auto; display: flex; gap: 18px; font-size: 15px; }
+  nav a { color: var(--muted); text-decoration: none; white-space: nowrap; }
+  nav a:hover { color: var(--text); }
+  nav .hide-sm { display: none; }
+  @media (min-width: 720px) { nav { gap: 24px; } nav .hide-sm { display: inline; } }
+
+  /* Hero */
+  .hero { padding-top: 56px; padding-bottom: 28px; text-align: center; }
+  .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  h1 { font-size: clamp(34px, 6vw, 60px); line-height: 1.06; letter-spacing: -.025em; margin: 0 auto 18px; max-width: 19ch; text-wrap: balance; }
+  .lede { font-size: clamp(17px, 2.2vw, 20px); color: var(--muted); max-width: 640px; margin: 0 auto 28px; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 999px; font-weight: 650; font-size: 16px; text-decoration: none; border: 1px solid transparent; }
+  .btn svg { width: 19px; height: 19px; flex: none; }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: #ffd06a; }
+  .btn-ghost { color: var(--text); border-color: var(--line); background: var(--surface); }
+  .btn-ghost:hover { border-color: #3a414b; }
+  .fine { font-size: 14px; color: var(--muted); margin-top: 14px; }
+
+  /* Before/after */
+  .compare { position: relative; margin: 40px auto 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none; --pos: 50%; background: #000; }
+  .compare img { width: 100%; height: auto; pointer-events: none; }
+  .compare .before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .compare .bar { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; margin-left: -1.5px; background: var(--accent); pointer-events: none; }
+  .compare .knob { position: absolute; top: 50%; left: var(--pos); width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,.5); display: grid; place-items: center; pointer-events: none; }
+  .compare .knob svg { width: 24px; height: 24px; }
+  .compare .tag { position: absolute; top: 12px; padding: 5px 12px; border-radius: 999px; background: rgba(15,17,20,.82); font-size: 14px; font-weight: 600; pointer-events: none; }
+  .compare .tag-l { left: 12px; }
+  .compare .tag-r { right: 12px; }
+  .compare input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; margin: 0; }
+  .compare:focus-within { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .caption { font-size: 14px; color: var(--muted); text-align: center; margin: 12px auto 0; max-width: 720px; }
+
+  /* Sections */
+  section { padding: 72px 0 8px; scroll-margin-top: 20px; }
+  h2 { font-size: clamp(26px, 4vw, 38px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 12px; }
+  .intro { color: var(--muted); max-width: 680px; margin: 0 0 32px; }
+  .grid { display: grid; gap: 16px; }
+  @media (min-width: 720px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .card h3 { margin: 0 0 8px; font-size: 20px; letter-spacing: -.01em; }
+  .card p { margin: 0; color: var(--muted); }
+  .card p + p { margin-top: 10px; }
+  .step { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-weight: 700; margin-bottom: 14px; }
+  .like { font-size: 14px; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+  .card ul { margin: 12px 0 0; padding-left: 20px; color: var(--muted); }
+  .card li + li { margin-top: 4px; }
+
+  /* Results */
+  .stats { display: grid; gap: 16px; margin-bottom: 28px; }
+  @media (min-width: 720px) { .stats { grid-template-columns: repeat(3, 1fr); } }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+  .stat b { display: block; font-size: 34px; line-height: 1.1; letter-spacing: -.02em; color: var(--accent); margin-bottom: 6px; }
+  .stat span { color: var(--muted); font-size: 15px; }
+  .closeups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0; }
+  @media (min-width: 900px) { .closeups { grid-template-columns: repeat(4, 1fr); } }
+  .closeups figure { margin: 0; }
+  .closeups img { border-radius: 10px; border: 1px solid var(--line); width: 100%; height: auto; }
+  .closeups figcaption { font-size: 14px; font-weight: 600; margin-top: 8px; }
+  .closeups figcaption.ours { color: var(--accent); }
+  .closeups figcaption small { display: block; font-weight: 400; color: var(--muted); }
+  .table-scroll { overflow-x: auto; margin-top: 36px; border: 1px solid var(--line); border-radius: var(--radius); }
+  table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 15px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; white-space: normal; }
+  thead th { background: var(--surface-2); font-size: 13px; font-weight: 650; color: var(--muted); vertical-align: bottom; }
+  thead th.ours { color: var(--accent); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td small { display: block; color: var(--muted); font-size: 13px; }
+  td.hi { color: var(--bad); }
+  .note { font-size: 14px; color: var(--muted); margin-top: 14px; max-width: 820px; }
+  .honest { margin-top: 28px; }
+
+  /* Help + credits */
+  .help { display: grid; gap: 24px; align-items: start; }
+  @media (min-width: 900px) { .help { grid-template-columns: 1.1fr .9fr; } }
+  .checks { list-style: none; padding: 0; margin: 0 0 24px; }
+  .checks li { padding-left: 30px; position: relative; margin-bottom: 10px; color: var(--muted); }
+  .checks li::before { content: ""; position: absolute; left: 4px; top: 9px; width: 12px; height: 7px; border-left: 2.5px solid var(--accent); border-bottom: 2.5px solid var(--accent); transform: rotate(-45deg); }
+  .checks b { color: var(--text); font-weight: 600; }
+  .credits dl { margin: 0; }
+  .credits dt { font-weight: 650; margin-top: 16px; }
+  .credits dt:first-child { margin-top: 0; }
+  .credits dd { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+  footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
+  footer nav { margin: 0; gap: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="favicon.svg" alt="" width="30" height="30">MacroStack</a>
+    <nav aria-label="Sections">
+      <a class="hide-sm" href="#how">How it works</a>
+      <a class="hide-sm" href="#results">Results</a>
+      <a href="#help">Share a stack</a>
+      <a href="https://github.com/macrostackapp/macrostack">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <span class="eyebrow">Free and open source · Android</span>
+    <h1>Focus stacking, shot and merged on your phone</h1>
+    <p class="lede">MacroStack sweeps the focus through your subject in one fast burst, then aligns and merges the frames into a single photo that's sharp from front to back. No laptop needed.</p>
+    <div class="buttons">
+      <a class="btn btn-primary" href="https://github.com/macrostackapp/macrostack/releases/latest/download/MacroStack.apk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+        Download for Android
+      </a>
+      <a class="btn btn-ghost" href="https://github.com/macrostackapp/macrostack">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        Source code
+      </a>
+    </div>
+    <p class="fine">Version 2.0.1 · Android 10 or newer · GPL-3.0</p>
+
+    <div class="compare" id="compare">
+      <img class="after" src="img/pcb-stacked.jpg" width="1600" height="1199" alt="The stacked result: the pins, the USB port and the barcode behind them are all sharp.">
+      <img class="before" src="img/pcb-frame.jpg" width="1600" height="1199" alt="A single frame: only a thin slice in the middle is sharp; the USB port in front is blurred.">
+      <div class="bar"></div>
+      <div class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>
+      <span class="tag tag-l">One frame</span>
+      <span class="tag tag-r">Stacked: 7 frames</span>
+      <input type="range" min="0" max="100" value="50" step="1" aria-label="Slide to compare one frame with the stacked result">
+    </div>
+    <p class="caption">Drag to compare. A 7-frame test stack from the <a href="https://github.com/PetteriAimonen/focus-stack">focus-stack</a> project (Petteri Aimonen, MIT), merged by MacroStack's engine with the Depth map method.</p>
+  </div>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="intro">The same three steps a pro camera and desktop stacking software take, done by one app on the phone. The engine is written in Kotlin and runs natively on the phone's own processor.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="step">1</div>
+          <h3>Shoot</h3>
+          <p>Set the nearest and farthest focus points and the number of frames. The app drives the focus motor through evenly spaced steps in one continuous burst, like a camera's focus bracketing: up to 21 frames per second on a Galaxy S24 Ultra.</p>
+          <p>Exposure and white balance stay locked for the whole stack. Focus peaking and a magnifier help you set the two points. Saves JPEG or RAW (DNG).</p>
+        </div>
+        <div class="card">
+          <div class="step">2</div>
+          <h3>Align</h3>
+          <p>Focusing changes the image scale slightly (focus breathing), and a hand-held phone shifts and tilts between frames. Every frame is measured against its neighbour and warped back into place, as precisely as desktop stacking software does it.</p>
+          <p>Brightness flicker from mains lighting is evened out too, so it can't show up as patches.</p>
+        </div>
+        <div class="card">
+          <div class="step">3</div>
+          <h3>Stack</h3>
+          <p>The engine works out, for every part of the picture, which frame had it in focus, and builds one photo from the sharpest parts. It runs in the background: you can keep shooting while it merges.</p>
+          <p>About 0.6–1 s per 12 MP frame on a recent phone. The original frames are kept for desktop software too.</p>
+        </div>
+      </div>
+
+      <h2 style="margin-top:64px">Two ways to merge</h2>
+      <p class="intro">The same two methods the best desktop stacking programs offer. Switch between them in the settings, or redo a stack with the other one.</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="like">Like Zerene DMap · Helicon Method B</div>
+          <h3>Depth map</h3>
+          <p>Builds a depth map of the subject and takes each spot from the frame where it was sharp. The default.</p>
+          <ul>
+            <li>Less noise than a single frame: flat, out-of-focus areas average many frames</li>
+            <li>A subject that moved appears once, with a clean outline</li>
+            <li>Smooth surfaces and clean edges</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="like">Like Zerene PMax · Helicon Method C</div>
+          <h3>Pyramid</h3>
+          <p>Splits every frame into layers of fine to coarse detail and keeps the strongest detail at every level, guided by a depth map so noise and glow don't win.</p>
+          <ul>
+            <li>Best for hairs, bristles and fine structures crossing each other</li>
+            <li>Keeps more fine texture than the Depth map</li>
+            <li>Uses about 300 MB however many frames you shoot</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="wrap">
+      <h2>Tested in the open</h2>
+      <p class="intro">Every version of the engine is benchmarked against two popular free desktop stackers, <a href="https://github.com/PetteriAimonen/focus-stack">focus-stack</a> and <a href="https://github.com/lucalista/shinestacker">Shine Stacker</a>, on the same stacks. Each result is checked block by block against the source frames. The scripts are in the repository, so anyone can rerun the test.</p>
+
+      <div class="stats">
+        <div class="stat"><b>under 1%</b><span>made-up detail on every test stack. focus-stack: 2–50%, Shine Stacker: 0–14%.</span></div>
+        <div class="stat"><b>0.06 px</b><span>alignment error between hand-held phone frames. focus-stack: 0.07 px.</span></div>
+        <div class="stat"><b>21 fps</b><span>focus-bracket burst on a Galaxy S24 Ultra, like a pro camera's focus stacking mode.</span></div>
+      </div>
+
+      <div class="closeups">
+        <figure><img src="img/close-focusstack.jpg" width="600" height="500" loading="lazy" alt="focus-stack: blotchy dark patches and halos on the shiny metal"><figcaption>focus-stack 1.5<small>blotchy patches on shiny metal</small></figcaption></figure>
+        <figure><img src="img/close-shine.jpg" width="600" height="500" loading="lazy" alt="Shine Stacker pyramid result of the same spot"><figcaption>Shine Stacker 1.17<small>Pyramid method</small></figcaption></figure>
+        <figure><img src="img/close-pyramid.jpg" width="600" height="500" loading="lazy" alt="MacroStack pyramid result of the same spot"><figcaption class="ours">MacroStack Pyramid<small>the same engine as in the app</small></figcaption></figure>
+        <figure><img src="img/close-depthmap.jpg" width="600" height="500" loading="lazy" alt="MacroStack depth map result of the same spot"><figcaption class="ours">MacroStack Depth map<small>the same engine as in the app</small></figcaption></figure>
+      </div>
+      <p class="caption" style="text-align:left;margin-left:0">The same spot of the stack above, enlarged 2.5×.</p>
+
+      <div class="table-scroll">
+        <table>
+          <caption class="note" style="caption-side:bottom;text-align:left;padding:0 14px 14px">Each cell: <b>soft</b> (% of detailed areas less than 70% as sharp as the sharpest frame) and, below it, <b>made-up</b> (% of the picture with detail that's in none of the frames: halos, blotches, noise). Lower is better for both. Highlighted: made-up detail over 5%. Desktop stackers ran with their default settings.</caption>
+          <thead>
+            <tr>
+              <th>Test stack</th>
+              <th class="ours">MacroStack<br>Depth map</th>
+              <th class="ours">MacroStack<br>Pyramid</th>
+              <th>focus-stack<br>1.5</th>
+              <th>Shine Stacker<br>Pyramid</th>
+              <th>Shine Stacker<br>Depth map</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Circuit-board switch, 10 frames, big focus steps</td><td>2.0<small>0.3</small></td><td>1.7<small>0.4</small></td><td>5.1<small class="hi">17.3</small></td><td>46.9*<small>2.9</small></td><td>49.1*<small>1.0</small></td></tr>
+            <tr><td>Circuit-board pins, 7 frames (above)</td><td>3.5<small>0.6</small></td><td>6.2<small>0.5</small></td><td>3.3<small class="hi">26.8</small></td><td>0.4<small>2.0</small></td><td>1.3<small>0.7</small></td></tr>
+            <tr><td>Plants, hand-held phone, 23 frames</td><td>0.7<small>0.1</small></td><td>2.4<small>0.4</small></td><td>1.4<small>5.0</small></td><td>0.0<small>2.4</small></td><td>1.4<small>0.1</small></td></tr>
+            <tr><td>Fruits, hand-held phone, 30 frames</td><td>6.9<small>0.0</small></td><td>0.0<small>0.0</small></td><td>0.0<small>2.3</small></td><td>1.1<small>2.8</small></td><td>4.3<small>0.5</small></td></tr>
+            <tr><td>Keyboard, hand-held phone, 32 frames</td><td>6.4<small>0.0</small></td><td>1.0<small>0.0</small></td><td>0.6<small>1.6</small></td><td>2.3<small>2.5</small></td><td>9.7<small>0.6</small></td></tr>
+            <tr><td>Galaxy S24 Ultra stack, 20 frames</td><td>10.7<small>0.0</small></td><td>0.2<small>0.1</small></td><td>0.0<small class="hi">13.4</small></td><td>0.5<small class="hi">14.1</small></td><td>2.5<small>4.5</small></td></tr>
+            <tr><td>Pro macro, Canon R5 II, 50 frames</td><td>26.1<small>0.0</small></td><td>8.9<small>0.2</small></td><td>24.4<small class="hi">50.0</small></td><td>98.9*<small>0.0</small></td><td>98.9*<small>0.0</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">* Shine Stacker's alignment skipped frames it couldn't match on these stacks (4 of 10 and 48 of 50), so its results there lack detail. Hand-held phone sweeps: <i>Depth from Focus with Your Mobile Phone</i> (Suwajanakorn, Hernández and Seitz, CVPR 2015). Pro macro: every 20th frame of a 999-frame stack by <a href="https://huggingface.co/datasets/jjjsood/focus-stack-sample">Johannes Sood</a> (CC BY 4.0).</p>
+
+      <div class="card honest">
+        <h3>Where the others do better</h3>
+        <p>focus-stack keeps the most fine texture: its wavelet merge lifts contrast beyond any single frame, which is also where its made-up detail comes from. Where Shine Stacker aligned every frame, its pyramid kept more fine contrast than ours, and its depth map was sharper on the phone stack. MacroStack's Depth map trades a little fine texture for less noise. Closing those gaps is what the next versions work on, with your stacks. <a href="https://github.com/macrostackapp/macrostack/blob/main/docs/ENGINE_LOG.md">Read the engine log</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="help">
+    <div class="wrap help">
+      <div>
+        <h2>Help make it better</h2>
+        <p class="intro" style="margin-bottom:24px">The engine gets better by finding the stacks it gets wrong. Every stack you share is added to the test set, and every change is checked against all of them, so a fix for one subject can't quietly break another.</p>
+        <ul class="checks">
+          <li><b>Any camera or phone</b>, around 10–50 frames, in shooting order</li>
+          <li><b>The original files</b> (JPEG, TIFF or RAW), not resized or edited</li>
+          <li><b>Hard subjects are the most useful:</b> hairs and bristles, shiny metal, dark edges on bright backgrounds, subjects that moved</li>
+          <li><b>You're credited by name</b> on this page and in the project. Your photos are only used for testing, and shown publicly only if you say so.</li>
+        </ul>
+        <div class="buttons" style="justify-content:flex-start">
+          <a class="btn btn-primary" href="https://github.com/macrostackapp/macrostack/issues/new?template=share-stack.yml">Share a focus stack</a>
+          <a class="btn btn-ghost" href="https://github.com/macrostackapp/macrostack/issues/new?template=problem.yml">Report a problem</a>
+        </div>
+      </div>
+      <div class="card credits">
+        <h3 style="margin-bottom:16px">Credits</h3>
+        <dl>
+          <dt>Made by</dt>
+          <dd>Bakkori, a macro photographer, with the help of Claude (Anthropic).</dd>
+          <dt>Stacks shared by photographers</dt>
+          <dd>Your name could be first here.</dd>
+          <dt>Test stacks</dt>
+          <dd>Petteri Aimonen (focus-stack examples, MIT) · Johannes Sood (Canon R5 II macro stack, CC BY 4.0) · Supasorn Suwajanakorn, Carlos Hernández and Steven M. Seitz (phone focus sweeps, CVPR 2015)</dd>
+          <dt>Compared against</dt>
+          <dd><a href="https://github.com/PetteriAimonen/focus-stack">focus-stack</a> by Petteri Aimonen · <a href="https://github.com/lucalista/shinestacker">Shine Stacker</a> by Luca Lista</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>MacroStack is free software under the <a href="https://github.com/macrostackapp/macrostack/blob/main/LICENSE">GPL-3.0 licence</a>.</span>
+    <nav aria-label="Project links">
+      <a href="https://github.com/macrostackapp/macrostack">Source</a>
+      <a href="https://github.com/macrostackapp/macrostack/releases">All versions</a>
+      <a href="https://github.com/macrostackapp/macrostack#readme">Manual</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var box = document.getElementById("compare");
+    var input = box.querySelector("input");
+    function set(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      box.style.setProperty("--pos", pct + "%");
+      input.value = Math.round(pct);
+    }
+    function fromEvent(e) {
+      var r = box.getBoundingClientRect();
+      set((e.clientX - r.left) / r.width * 100);
+    }
+    var dragging = false;
+    box.addEventListener("pointerdown", function (e) {
+      dragging = true;
+      box.setPointerCapture(e.pointerId);
+      fromEvent(e);
+    });
+    box.addEventListener("pointermove", function (e) { if (dragging) fromEvent(e); });
+    box.addEventListener("pointerup", function () { dragging = false; });
+    box.addEventListener("pointercancel", function () { dragging = false; });
+    input.addEventListener("input", function () { set(+input.value); });
+  })();
+</script>
+</body>
+</html>

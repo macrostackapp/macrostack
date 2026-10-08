@@ -11,7 +11,7 @@ import sys
 import numpy as np
 from PIL import Image
 
-B = "C:/dev/macro-app/tools/bench/work/bench/"
+B = os.path.join(os.path.dirname(os.path.abspath(__file__)), "work", "bench").replace("\\", "/") + "/"
 
 def parse_transforms(log):
     """(a, b, c, d, tx, ty) per frame: u = a*X + b*Y + tx, v = c*X + d*Y + ty (centred coordinates)."""

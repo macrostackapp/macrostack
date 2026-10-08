@@ -1,0 +1,30 @@
+name: Report a problem
+description: Something in the app doesn't work, or a stacked photo came out wrong.
+labels: ["problem"]
+body:
+  - type: input
+    id: phone
+    attributes:
+      label: Phone model and Android version
+      placeholder: Galaxy S24 Ultra, Android 15
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: MacroStack version
+      description: Shown in Android's app info (long-press the app icon → App info).
+      placeholder: "2.0.1"
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+      description: Screenshots help. For a bad stacked result, attach the result and, if you can, share the frames (see "Share a focus stack").
+    validations:
+      required: true
+  - type: textarea
+    id: camera-info
+    attributes:
+      label: Camera info
+      description: For lens or camera problems, open ⚙ Settings → Camera info → Copy, and paste it here.
+      render: text

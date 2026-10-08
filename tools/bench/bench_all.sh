@@ -4,12 +4,13 @@
 # usage: sh tools/bench/bench_all.sh LABEL [SET ...]
 #   With no sets: every set in tools/bench/sets.txt. A set is a name from sets.txt, or a folder in samples\.
 #   Scores are appended to tools/bench/work/bench/score_LABEL.txt (see tools/bench/README.md).
-ROOT=/c/dev/macro-app
-T=C:/dev/macro-app/tools/bench
+ROOT=$(cd "$(dirname "$0")/../.." && pwd)
+WROOT=$(cd "$ROOT" && (pwd -W 2>/dev/null || pwd))   # C:/... form for Python on Windows (Git Bash)
+T=$WROOT/tools/bench
 W=$ROOT/tools/bench/work
-WW=C:/dev/macro-app/tools/bench/work
-FS=$ROOT/tools/focus-stack/focus-stack/focus-stack.exe
-SHINE=$ROOT/tools/shinestacker-env/Scripts/python.exe   # optional; NO_SHINE=1 skips it
+WW=$WROOT/tools/bench/work
+FS=${FOCUS_STACK:-$ROOT/tools/focus-stack/focus-stack/focus-stack.exe}
+SHINE=${SHINE_PYTHON:-$ROOT/tools/shinestacker-env/Scripts/python.exe}   # optional; NO_SHINE=1 skips it
 REG=$ROOT/tools/bench/sets.txt
 label=$1; shift
 sets=${*:-$(grep -v '^#' $REG | awk 'NF { print $1 }')}
