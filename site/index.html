@@ -97,11 +97,12 @@
   .card li + li { margin-top: 4px; }
 
   /* Results */
-  .stats { display: grid; gap: 16px; margin-bottom: 28px; }
-  @media (min-width: 720px) { .stats { grid-template-columns: repeat(3, 1fr); } }
-  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
-  .stat b { display: block; font-size: 34px; line-height: 1.1; letter-spacing: -.02em; color: var(--accent); margin-bottom: 6px; }
-  .stat span { color: var(--muted); font-size: 15px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  @media (min-width: 720px) { .stats { gap: 16px; margin-bottom: 28px; } }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 12px; }
+  @media (min-width: 720px) { .stat { padding: 22px 24px; } }
+  .stat b { display: block; font-size: clamp(22px, 5.5vw, 34px); line-height: 1.1; letter-spacing: -.02em; color: var(--accent); margin-bottom: 6px; white-space: nowrap; }
+  .stat span { color: var(--muted); font-size: 14px; display: block; line-height: 1.35; }
   .closeups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0; }
   @media (min-width: 900px) { .closeups { grid-template-columns: repeat(4, 1fr); } }
   .closeups figure { margin: 0; }
@@ -133,6 +134,49 @@
   .credits dt:first-child { margin-top: 0; }
   .credits dd { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
 
+  /* How it works, shown */
+  .num { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 14px; margin-right: 10px; flex: none; }
+  .how-fig { margin: 0; }
+  .how-fig img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .how-fig figcaption { display: flex; align-items: center; flex-wrap: wrap; margin-top: 12px; font-size: 16px; color: var(--muted); }
+  .how-fig figcaption b { color: var(--text); margin-right: 8px; }
+  .strip { display: grid; grid-auto-flow: column; grid-auto-columns: 42%; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .strip::-webkit-scrollbar { display: none; }
+  @media (min-width: 720px) { .strip { grid-auto-columns: 1fr; overflow: visible; } }
+  .shot { position: relative; scroll-snap-align: start; }
+  .shot span { position: absolute; left: 8px; top: 8px; padding: 2px 9px; border-radius: 999px; background: rgba(15,17,20,.82); font-size: 13px; font-weight: 600; }
+  .pair { display: grid; gap: 20px; margin-top: 28px; align-items: start; }
+  @media (min-width: 720px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .depth { position: relative; }
+  .legend { position: absolute; right: 10px; bottom: 10px; display: flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 999px; background: rgba(15,17,20,.82); font-size: 13px; font-weight: 600; }
+  .legend i { width: 64px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #ffe0a0, #e39b1f, #3a2408); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .chips span { padding: 8px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 15px; }
+  .chips b { color: var(--accent); font-weight: 650; }
+
+  /* Made-up detail chart: one measure, ours highlighted */
+  .chart { margin: 0 0 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+  .chart h3 { margin: 0; font-size: 18px; }
+  .chart .sub { color: var(--muted); font-size: 14px; margin: 4px 0 18px; }
+  .bar-row { display: grid; grid-template-columns: 112px 1fr; align-items: center; gap: 12px; margin-top: 12px; position: relative; outline: none; }
+  .bar-row .name { font-size: 15px; color: var(--text); }
+  .bar-row.ours .name { font-weight: 650; }
+  .track { display: flex; align-items: center; gap: 10px; height: 24px; }
+  .fill { height: 20px; min-width: 4px; border-radius: 0 4px 4px 0; background: #6b7280; }
+  .bar-row.ours .fill { background: var(--accent); }
+  .val { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; }
+  .bar-row[data-tip]:hover::after, .bar-row[data-tip]:focus::after { content: attr(data-tip); position: absolute; left: 124px; top: -34px; padding: 6px 10px; border-radius: 8px; background: #000; border: 1px solid var(--line); font-size: 13px; color: var(--text); white-space: nowrap; z-index: 2; pointer-events: none; }
+  details.numbers { margin-top: 20px; }
+  details.numbers summary { cursor: pointer; color: var(--accent); font-weight: 600; list-style: none; }
+  details.numbers summary::-webkit-details-marker { display: none; }
+  details.numbers summary::before { content: "+ "; }
+  details.numbers[open] summary::before { content: "\2212  "; }
+
+  /* Share a stack */
+  .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 18px; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; font-size: 15px; font-weight: 600; }
+  .tile svg { display: block; width: 28px; height: 28px; color: var(--accent); margin-bottom: 10px; }
+
   footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
   footer nav { margin: 0; gap: 20px; }
@@ -156,7 +200,7 @@
   <div class="wrap hero">
     <span class="eyebrow">Free and open source · Android</span>
     <h1>Focus stacking, shot and merged on your phone</h1>
-    <p class="lede">MacroStack sweeps the focus through your subject in one fast burst, then aligns and merges the frames into a single photo that's sharp from front to back. No laptop needed.</p>
+    <p class="lede">One fast burst of photos, one photo sharp from front to back. Made on your phone.</p>
     <div class="buttons">
       <a class="btn btn-primary" href="https://github.com/macrostackapp/macrostack/releases/latest/download/MacroStack.apk">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
@@ -178,57 +222,42 @@
       <span class="tag tag-r">Stacked: 20 frames</span>
       <input type="range" min="0" max="100" value="50" step="1" aria-label="Slide to compare one frame with the stacked result">
     </div>
-    <p class="caption">Drag to compare. Shot and stacked by Bakkori on a Galaxy S24 Ultra (1× lens) with MacroStack: the first of 20 frames, and the photo the phone made from them with the Pyramid method.</p>
+    <p class="caption">Drag to compare. Shot and stacked on a Galaxy S24 Ultra by Bakkori.</p>
   </div>
 
   <section id="how">
     <div class="wrap">
       <h2>How it works</h2>
-      <p class="intro">The same three steps a pro camera and desktop stacking software take, done by one app on the phone. The engine is written in Kotlin and runs natively on the phone's own processor.</p>
-      <div class="grid grid-3">
-        <div class="card">
-          <div class="step">1</div>
-          <h3>Shoot</h3>
-          <p>Set the nearest and farthest focus points and the number of frames. The app drives the focus motor through evenly spaced steps in one continuous burst, like a camera's focus bracketing: up to 21 frames per second on a Galaxy S24 Ultra.</p>
-          <p>Exposure and white balance stay locked for the whole stack. Focus peaking and a magnifier help you set the two points. Saves JPEG or RAW (DNG).</p>
+      <figure class="how-fig">
+        <div class="strip">
+          <div class="shot"><img src="img/how/sweep-1.jpg" width="480" height="360" loading="lazy" alt="Frame 1: the beads in front are sharp"><span>1</span></div>
+          <div class="shot"><img src="img/how/sweep-2.jpg" width="480" height="360" loading="lazy" alt="Frame 6: the coin is sharp"><span>6</span></div>
+          <div class="shot"><img src="img/how/sweep-3.jpg" width="480" height="360" loading="lazy" alt="Frame 11: the lace just behind the coin is sharp"><span>11</span></div>
+          <div class="shot"><img src="img/how/sweep-4.jpg" width="480" height="360" loading="lazy" alt="Frame 15: the lace further back is sharp"><span>15</span></div>
+          <div class="shot"><img src="img/how/sweep-5.jpg" width="480" height="360" loading="lazy" alt="Frame 20: the lace at the back is sharp, the coin is blurred"><span>20</span></div>
         </div>
-        <div class="card">
-          <div class="step">2</div>
-          <h3>Align</h3>
-          <p>Focusing changes the image scale slightly (focus breathing), and a hand-held phone shifts and tilts between frames. Every frame is measured against its neighbour and warped back into place, as precisely as desktop stacking software does it.</p>
-          <p>Brightness flicker from mains lighting is evened out too, so it can't show up as patches.</p>
-        </div>
-        <div class="card">
-          <div class="step">3</div>
-          <h3>Stack</h3>
-          <p>The engine works out, for every part of the picture, which frame had it in focus, and builds one photo from the sharpest parts. It runs in the background: you can keep shooting while it merges.</p>
-          <p>About 0.6–1 s per 12 MP frame on a recent phone. The original frames are kept for desktop software too.</p>
-        </div>
+        <figcaption><span class="num">1</span><b>Shoot</b>20 photos in one burst, focus stepping from front to back.</figcaption>
+      </figure>
+      <div class="pair">
+        <figure class="how-fig">
+          <div class="depth">
+            <img src="img/how/how-depth.jpg" width="960" height="720" loading="lazy" alt="The depth map: the beads and coin light (near), the lace behind darker (far)">
+            <div class="legend" aria-hidden="true">near<i></i>far</div>
+          </div>
+          <figcaption><span class="num">2</span><b>Align &amp; map</b>Frames lined up, then a map of what's sharp where.</figcaption>
+        </figure>
+        <figure class="how-fig">
+          <img src="img/how/how-result.jpg" width="960" height="720" loading="lazy" alt="The stacked photo: beads, coin and lace all sharp">
+          <figcaption><span class="num">3</span><b>Stack</b>The sharp parts become one photo.</figcaption>
+        </figure>
       </div>
-
-      <h2 style="margin-top:64px">Two ways to merge</h2>
-      <p class="intro">The same two methods the best desktop stacking programs offer. Switch between them in the settings, or redo a stack with the other one.</p>
-      <div class="grid grid-2">
-        <div class="card">
-          <div class="like">Like Zerene DMap · Helicon Method B</div>
-          <h3>Depth map</h3>
-          <p>Builds a depth map of the subject and takes each spot from the frame where it was sharp. The default.</p>
-          <ul>
-            <li>Less noise than a single frame: flat, out-of-focus areas average many frames</li>
-            <li>A subject that moved appears once, with a clean outline</li>
-            <li>Smooth surfaces and clean edges</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="like">Like Zerene PMax · Helicon Method C</div>
-          <h3>Pyramid</h3>
-          <p>Splits every frame into layers of fine to coarse detail and keeps the strongest detail at every level, guided by a depth map so noise and glow don't win.</p>
-          <ul>
-            <li>Best for hairs, bristles and fine structures crossing each other</li>
-            <li>Keeps more fine texture than the Depth map</li>
-            <li>Uses about 300 MB however many frames you shoot</li>
-          </ul>
-        </div>
+      <div class="chips">
+        <span><b>21 fps</b> burst</span>
+        <span>JPEG or <b>RAW</b></span>
+        <span>Stacks <b>on the phone</b></span>
+        <span>Keep shooting while it stacks</span>
+        <span><b>Depth map</b> · cleanest</span>
+        <span><b>Pyramid</b> · finest hairs</span>
       </div>
     </div>
   </section>
@@ -236,12 +265,20 @@
   <section id="results">
     <div class="wrap">
       <h2>Tested in the open</h2>
-      <p class="intro">Every version of the engine is benchmarked against two popular free desktop stackers, <a href="https://github.com/PetteriAimonen/focus-stack">focus-stack</a> and <a href="https://github.com/lucalista/shinestacker">Shine Stacker</a>, on the same stacks. Each result is checked block by block against the source frames. The scripts are in the repository, so anyone can rerun the test.</p>
+      <p class="intro">Every version is checked against two popular free desktop stackers, <a href="https://github.com/PetteriAimonen/focus-stack">focus-stack</a> and <a href="https://github.com/lucalista/shinestacker">Shine Stacker</a>, on the same 17 stacks.</p>
 
       <div class="stats">
-        <div class="stat"><b>0–2%</b><span>made-up detail on all 17 test stacks. focus-stack: 2–50%, Shine Stacker: 0–37%.</span></div>
-        <div class="stat"><b>0.06 px</b><span>alignment error between hand-held phone frames. focus-stack: 0.07 px.</span></div>
-        <div class="stat"><b>21 fps</b><span>focus-bracket burst on a Galaxy S24 Ultra, like a pro camera's focus stacking mode.</span></div>
+        <div class="stat"><b>0–2%</b><span>made-up detail</span></div>
+        <div class="stat"><b>0.06 px</b><span>alignment error, hand-held</span></div>
+        <div class="stat"><b>21 fps</b><span>burst, Galaxy S24 Ultra</span></div>
+      </div>
+
+      <div class="chart" role="figure" aria-labelledby="chart-title">
+        <h3 id="chart-title">Made-up detail</h3>
+        <p class="sub">Halos, blotches and noise that are in none of your photos. Worst case across 17 stacks; lower is better.</p>
+        <div class="bar-row ours" data-tip="0–2% on every stack" tabindex="0"><span class="name">MacroStack</span><div class="track"><div class="fill" style="width:3.2%"></div><span class="val">2%</span></div></div>
+        <div class="bar-row" data-tip="0–37% across the stacks" tabindex="0"><span class="name">Shine Stacker</span><div class="track"><div class="fill" style="width:66%"></div><span class="val">37%</span></div></div>
+        <div class="bar-row" data-tip="2–50% across the stacks" tabindex="0"><span class="name">focus-stack</span><div class="track"><div class="fill" style="width:89%"></div><span class="val">50%</span></div></div>
       </div>
 
       <div class="closeups">
@@ -250,7 +287,10 @@
         <figure><img src="img/close-pyramid.jpg" width="600" height="500" loading="lazy" alt="MacroStack Pyramid: the needle's eye, with a smoother background"><figcaption class="ours">MacroStack Pyramid<small>what the phone made</small></figcaption></figure>
         <figure><img src="img/close-depthmap.jpg" width="600" height="500" loading="lazy" alt="MacroStack Depth map: the needle's eye, with the smoothest background"><figcaption class="ours">MacroStack Depth map<small>the smoothest background</small></figcaption></figure>
       </div>
-      <p class="caption" style="text-align:left;margin-left:0">The eye of a needle from another of these stacks (19 frames, 5× lens), enlarged about 2×: as sharp in all four, but only MacroStack keeps the out-of-focus background smooth.</p>
+      <p class="caption" style="text-align:left;margin-left:0">A needle's eye from another of these stacks, enlarged. All four are sharp; only MacroStack keeps the blurred background smooth.</p>
+
+      <details class="numbers">
+        <summary>See all the numbers</summary>
 
       <div class="table-scroll">
         <table>
@@ -282,6 +322,7 @@
         <h3>Where the others do better</h3>
         <p>focus-stack keeps the most fine texture: its wavelet merge lifts contrast beyond any single frame, which is also where its made-up detail comes from. Where Shine Stacker aligned every frame, its pyramid kept more fine contrast than ours, and its depth map was sharper on the phone stack. MacroStack's Depth map trades a little fine texture for less noise. Closing those gaps is what the next versions work on, with your stacks. <a href="https://github.com/macrostackapp/macrostack/blob/main/docs/ENGINE_LOG.md">Read the engine log</a>.</p>
       </div>
+      </details>
     </div>
   </section>
 
@@ -289,13 +330,14 @@
     <div class="wrap help">
       <div>
         <h2>Help make it better</h2>
-        <p class="intro" style="margin-bottom:24px">The engine gets better by finding the stacks it gets wrong. Every stack you share is added to the test set, and every change is checked against all of them, so a fix for one subject can't quietly break another.</p>
-        <ul class="checks">
-          <li><b>Any camera or phone</b>, around 10–50 frames, in shooting order</li>
-          <li><b>The original files</b> (JPEG, TIFF or RAW), not resized or edited</li>
-          <li><b>Hard subjects are the most useful:</b> hairs and bristles, shiny metal, dark edges on bright backgrounds, subjects that moved</li>
-          <li><b>You're credited by name</b> on this page and in the project. Your photos are only used for testing, and shown publicly only if you say so.</li>
-        </ul>
+        <p class="intro" style="margin-bottom:20px">Every stack you share makes the engine better.</p>
+        <div class="tiles">
+          <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Any camera or phone</div>
+          <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="13" height="13" rx="2"/><path d="M4 7v12a2 2 0 0 0 2 2h12"/></svg>10–50 original frames</div>
+          <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Tricky subjects: hairs, shine, motion</div>
+          <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="8" r="4"/><path d="M3 20c0-3.5 3-6 7-6s7 2.5 7 6"/><path d="m16 11 2 2 4-4"/></svg>Credited by name</div>
+        </div>
+        <p class="fine" style="margin:0 0 20px">Used only for testing. Shown publicly only if you say so.</p>
         <div class="buttons" style="justify-content:flex-start">
           <a class="btn btn-primary" href="https://github.com/macrostackapp/macrostack/issues/new?template=share-stack.yml">Share a focus stack</a>
           <a class="btn btn-ghost" href="https://github.com/macrostackapp/macrostack/issues/new?template=problem.yml">Report a problem</a>
