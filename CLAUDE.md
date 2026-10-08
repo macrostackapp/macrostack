@@ -30,7 +30,8 @@ are in `CLAUDE.local.md`, which is not in git. Read it first if it exists.
 ## Versions and releases
 
 - Each finished version is one commit on `main`, tagged `vX.Y` (or `vX.Y.Z`), and published as a GitHub
-  release with the signed APK attached as `MacroStack-X.Y.apk`.
+  release with the signed APK attached as `MacroStack.apk` (always that name: the website's download button
+  links to `releases/latest/download/MacroStack.apk`).
 - Not tracked (see `.gitignore`): `samples/` (test stacks, 2 GB), `tools/focus-stack/` (focus-stack 1.5 for
   Windows from github.com/PetteriAimonen/focus-stack/releases), `tools/shinestacker-env/` (`python -m venv`
   + `pip install shinestacker`), `tools/bench/work/`, `MacroStack.apk`, the signing key (`keystore/`,
@@ -45,8 +46,8 @@ are in `CLAUDE.local.md`, which is not in git. Read it first if it exists.
   `keystore.properties`; without that file it comes out unsigned. Android only installs an update signed
   with the same key as the installed app, so that key must never change.
 - A release: bump `versionCode`/`versionName` in `app/build.gradle.kts`, build, commit, tag, then
-  `gh release create vX.Y MacroStack-X.Y.apk --title "MacroStack X.Y" --notes ...`. Update the test results on
-  the website (`site/index.html`, from `tools/bench/history/`) when the engine changed.
+  `gh release create vX.Y MacroStack.apk --title "MacroStack X.Y" --notes ...`. Update the version line on the
+  website (`site/index.html`), and its test results (from `tools/bench/history/`) when the engine changed.
 - No phone or emulator in the development setup: UI and camera code can't be run here. Testers install the
   APK and report back (screenshots, Settings → Camera info → Copy).
 - Website images must be the maintainer's own photos, or credited as their licence requires
