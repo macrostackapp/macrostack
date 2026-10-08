@@ -15,7 +15,7 @@ import kotlin.math.roundToInt
  * colour channels from that frame. The coarsest band is averaged. Rebuilding the pyramid gives an
  * image that is sharp wherever any frame was.
  *
- * Memory stays constant however many frames are added: about 23 bytes per output pixel.
+ * Memory stays constant however many frames are added: about 25 bytes per output pixel.
  *
  * A [Guide] (from a depth map) can weight each frame per region: a frame's detail where it's only
  * noise, or the glow of a blurred object, then can't win over the frame that is really in focus.
@@ -72,6 +72,16 @@ class PyramidFuser(
 
     /** Σ weight of the frames in [topSum], per position. */
     private val topWeight: FloatArray
+
+    /**
+     * The darkest and brightest luma any frame had at each pixel (unsigned bytes). Near a strong edge
+     * neighbouring pixels can take their fine detail from different frames, and the mismatched
+     * corrections overshoot: specks or a dotted rim darker (or brighter) than any frame was there. The
+     * result is kept within this range; a real edge always is, since it comes from one frame. (Leaving
+     * out the frames the guide weights low — glow — made the range jump between regions: patches.)
+     */
+    private val lumaMin = ByteArray(width * height).also { it.fill(-1) }
+    private val lumaMax = ByteArray(width * height)
 
     init {
         require(width >= MIN_SIZE && height >= MIN_SIZE) { "Image too small to stack: ${width}×$height" }
@@ -185,11 +195,14 @@ class PyramidFuser(
                 val fb = fused[0][2]
                 for (x in 0 until w) {
                     val i = row + x
-                    out[i] = pack(
-                        up[0][x] + detail(0, fr[i]),
-                        up[1][x] + detail(0, fg[i]),
-                        up[2][x] + detail(0, fb[i]),
-                    )
+                    val r = up[0][x] + detail(0, fr[i])
+                    val g = up[1][x] + detail(0, fg[i])
+                    val b = up[2][x] + detail(0, fb[i])
+                    val luma = LR * r + LG * g + LB * b
+                    val lo = (lumaMin[i].toInt() and 0xFF) - ENVELOPE_MARGIN
+                    val hi = (lumaMax[i].toInt() and 0xFF) + ENVELOPE_MARGIN
+                    val shift = if (luma < lo) lo - luma else if (luma > hi) hi - luma else 0f
+                    out[i] = pack(r + shift, g + shift, b + shift)
                 }
             }
         }
@@ -204,7 +217,7 @@ class PyramidFuser(
         val gw = widths[1]
         val gh = heights[1]
 
-        // Pass 1: |luma detail| per pixel, summed over 5 columns.
+        // Pass 1: |luma detail| per pixel, summed over 5 columns; the frames' luma range.
         parallel.forRows(h) { from, until ->
             val tmp = FloatArray(gw)
             val up = Array(3) { FloatArray(w) }
@@ -214,11 +227,15 @@ class PyramidFuser(
                 for (c in 0 until 3) expandRow(g1[c], gw, gh, y, w, tmp, up[c])
                 val row = y * w
                 for (x in 0 until w) {
-                    val p = pixels[row + x]
-                    val dr = ((p shr 16) and 0xFF) - up[0][x]
-                    val dg = ((p shr 8) and 0xFF) - up[1][x]
-                    val db = (p and 0xFF) - up[2][x]
-                    detail[x] = (abs(LR * dr + LG * dg + LB * db) * ENERGY_SCALE).toInt()
+                    val i = row + x
+                    val p = pixels[i]
+                    val r = (p shr 16) and 0xFF
+                    val g = (p shr 8) and 0xFF
+                    val b = p and 0xFF
+                    detail[x] = (abs(LR * (r - up[0][x]) + LG * (g - up[1][x]) + LB * (b - up[2][x])) * ENERGY_SCALE).toInt()
+                    val luma = (77 * r + 150 * g + 29 * b + 128) shr 8
+                    if (luma < (lumaMin[i].toInt() and 0xFF)) lumaMin[i] = luma.toByte()
+                    if (luma > (lumaMax[i].toInt() and 0xFF)) lumaMax[i] = luma.toByte()
                 }
                 if (histogram != null) for (x in 0 until w) histogram[min(detail[x], HISTOGRAM_BINS - 1)]++
                 var s = detail[0] * 3 + detail[min(1, w - 1)] + detail[min(2, w - 1)]
@@ -430,6 +447,9 @@ class PyramidFuser(
         /** Soft-threshold strength, in noise σ, for the finest and second-finest levels. */
         const val SHRINK_LEVEL0 = 2.0f
         const val SHRINK_LEVEL1 = 1.3f
+
+        /** How far (in luma levels) the result may go beyond the darkest / brightest frame at a pixel. */
+        const val ENVELOPE_MARGIN = 2f
 
         const val LR = 0.299f
         const val LG = 0.587f

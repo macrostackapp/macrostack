@@ -21,8 +21,8 @@ android {
         applicationId = "com.macrostack.app"
         minSdk = 29
         targetSdk = 35
-        versionCode = 12
-        versionName = "2.0.1"
+        versionCode = 13
+        versionName = "2.1"
     }
 
     signingConfigs {

@@ -271,6 +271,46 @@ class FusionTest {
         }
     }
 
+    @Test
+    fun pyramidStaysWithinWhatTheFramesShowed() {
+        // Beside a bright, near object, some pixels take their finest detail from a frame where the edge
+        // is sharp and their neighbours from frames where its blur spills over: the mismatched corrections
+        // overshoot into dark specks and rims, darker (or brighter) than any frame was there. The depth
+        // map only blends frames, so what it shows outside the frames' range is resampling and noise:
+        // the pyramid should show no more. No breathing or shake here, so frame pixels line up with the
+        // result's. (Before the range was enforced: 2.11 % against the depth map's 1.41 %.)
+        val stack = SyntheticStack(
+            frames = 17, maxBlurSigma = 4f, noiseSigma = 2f, brightNoise = 6f, occluder = true,
+            breathingPerFrame = 0.0, maxShiftPx = 0.0,
+        )
+        fun luma(c: Int) = (77 * ((c shr 16) and 0xFF) + 150 * ((c shr 8) and 0xFF) + 29 * (c and 0xFF)) / 256.0
+        Parallel(4).use { parallel ->
+            val outside = StackFusion.Method.entries.associateWith { method ->
+                val r = StackFusion(parallel).run(stack.asFrames(), object : StackFusion.Listener {}, method = method)
+                var count = 0
+                var n = 0
+                for (y in r.crop.top + 4 until r.crop.bottom - 4) for (x in r.crop.left + 4 until r.crop.right - 4) {
+                    val i = y * stack.width + x
+                    var darkest = 255.0
+                    var brightest = 0.0
+                    for (frame in stack.images) {
+                        val l = luma(frame.pixels[i])
+                        darkest = minOf(darkest, l)
+                        brightest = maxOf(brightest, l)
+                    }
+                    val v = luma(r.image.pixels[(y - r.crop.top) * r.image.width + (x - r.crop.left)])
+                    if (v < darkest - OUTSIDE_LEVELS || v > brightest + OUTSIDE_LEVELS) count++
+                    n++
+                }
+                100.0 * count / n
+            }
+            val pyramid = outside.getValue(StackFusion.Method.PYRAMID)
+            val depthMap = outside.getValue(StackFusion.Method.DEPTH_MAP)
+            println("outside the frames' range by > $OUTSIDE_LEVELS levels: pyramid %.2f%%, depth map %.2f%%".format(pyramid, depthMap))
+            assertTrue("pyramid $pyramid% vs depth map $depthMap%", pyramid < depthMap + OUTSIDE_EXTRA_PERCENT)
+        }
+    }
+
     private fun sharperThanAnyFrame(method: StackFusion.Method) {
         // 17 frames: neighbouring depths of field overlap, as in a well-planned real stack.
         val stack = SyntheticStack(frames = 17, maxBlurSigma = 4f)
@@ -352,3 +392,6 @@ class FusionTest {
         }
     }
 }
+
+private const val OUTSIDE_LEVELS = 4
+private const val OUTSIDE_EXTRA_PERCENT = 0.3

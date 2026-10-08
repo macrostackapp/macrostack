@@ -16,3 +16,15 @@ fruits       tune     samples/phone_dff/calibration/fruits/origs/*.jpg   hand-he
 keyboard     tune     samples/phone_dff/calibration/keyboard/origs/*.jpg hand-held phone sweep, 32 frames, thin cable and lettering (Suwajanakorn et al. 2015)
 room         tune     samples/Stack_*.jpg                                the maintainer's living-room stack, S24 Ultra 1x, 20 frames: knee, doily, drawer, blanket
 pro          tune     samples/pro_macro/frame_*.tif                      every 20th of a 999-frame Canon R5 II macro stack, 50 frames at 17 MP: banana skin, exposure drift, hot pixels (Johannes Sood, CC BY 4.0)
+# The maintainer's studio stacks, 2026-10-08: Galaxy S24 Ultra, MacroStack 2.0.1 Fast mode, JPG + RAW (raw/ in each
+# folder; extra/ holds duplicate re-shoots from an app bug; phone_result/ is the app's own stacked JPEG).
+studio_texture    tune     samples/studio_texture_5x/*.jpg                     fabric/wood weave at 5x, 20 frames: fine repetitive texture, very shallow focus
+studio_glass      tune     samples/studio_glass_beads_5x/*.jpg                 yellow glass and wooden beads at 5x: shiny highlights, smooth glass, dark gaps
+studio_keypad     holdout  samples/studio_keypad_5x/*.jpg                      keypad buttons at 5x: rubber keys with lettering, depth steps
+studio_lace       tune     samples/studio_lace_backlit_1x/*.jpg                backlit lace over a keypad at 1x: bright backlight, fine bright pattern
+studio_switch     tune     samples/studio_switch_1x/*.jpg                      wall-switch mechanism at 1x: metal, plastic edges, deep scene
+studio_coin       holdout  samples/studio_lace_coin_1x/*.jpg                   lace, a coin and beads at 1x: fine lace, shiny coin rim
+studio_needles    tune     samples/studio_needles_5x/*.jpg                     needles and thread at 5x: thin shiny needles, loose fibres; 19 frames (frame 18 lost, app bug)
+studio_spools     holdout  samples/studio_spools_3x/*.jpg                      thread spools at 3x: wound fibres, saturated yellow
+studio_threads    tune     samples/studio_threads_3x/*.jpg                     tangled threads on spools at 3x: thin fibres crossing at different depths (the hair test)
+studio_watch      tune     samples/studio_watch_5x/*.jpg                       watch dial at 5x: printed text, shiny hands, dial at an angle

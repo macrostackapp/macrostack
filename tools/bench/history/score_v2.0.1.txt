@@ -1,0 +1,102 @@
+pcbdm: 10 frames, 59% of blocks have real detail (noise floor 3.7)
+  focus-stack     kept median 1.15, soft (<0.7)  5.1%, made-up detail 17.3%
+  ours depth map  kept median 1.00, soft (<0.7)  2.0%, made-up detail  0.3%
+  ours pyramid    kept median 0.97, soft (<0.7)  1.7%, made-up detail  0.4%
+  shine pyramid   kept median 0.82, soft (<0.7) 46.9%, made-up detail  2.9%
+  shine depth map kept median 0.75, soft (<0.7) 49.1%, made-up detail  1.0%
+pcb: 7 frames, 89% of blocks have real detail (noise floor 6.9)
+  focus-stack     kept median 1.32, soft (<0.7)  3.3%, made-up detail 26.8%
+  ours depth map  kept median 1.00, soft (<0.7)  3.5%, made-up detail  0.6%
+  ours pyramid    kept median 0.91, soft (<0.7)  6.2%, made-up detail  0.5%
+  shine pyramid   kept median 1.03, soft (<0.7)  0.4%, made-up detail  2.0%
+  shine depth map kept median 0.92, soft (<0.7)  1.3%, made-up detail  0.7%
+plants: 23 frames, 36% of blocks have real detail (noise floor 16.3)
+  focus-stack     kept median 1.24, soft (<0.7)  1.4%, made-up detail  5.0%
+  ours depth map  kept median 0.90, soft (<0.7)  0.7%, made-up detail  0.1%
+  ours pyramid    kept median 0.95, soft (<0.7)  2.4%, made-up detail  0.4%
+  shine pyramid   kept median 1.11, soft (<0.7)  0.0%, made-up detail  2.4%
+  shine depth map kept median 0.92, soft (<0.7)  1.4%, made-up detail  0.1%
+fruits: 30 frames, 23% of blocks have real detail (noise floor 14.1)
+  focus-stack     kept median 1.16, soft (<0.7)  0.0%, made-up detail  2.3%
+  ours depth map  kept median 0.82, soft (<0.7)  6.9%, made-up detail  0.0%
+  ours pyramid    kept median 0.95, soft (<0.7)  0.0%, made-up detail  0.0%
+  shine pyramid   kept median 1.12, soft (<0.7)  1.1%, made-up detail  2.8%
+  shine depth map kept median 0.94, soft (<0.7)  4.3%, made-up detail  0.5%
+keyboard: 32 frames, 64% of blocks have real detail (noise floor 19.4)
+  focus-stack     kept median 1.20, soft (<0.7)  0.6%, made-up detail  1.6%
+  ours depth map  kept median 0.84, soft (<0.7)  6.4%, made-up detail  0.0%
+  ours pyramid    kept median 0.96, soft (<0.7)  1.0%, made-up detail  0.0%
+  shine pyramid   kept median 1.08, soft (<0.7)  2.3%, made-up detail  2.5%
+  shine depth map kept median 0.87, soft (<0.7)  9.7%, made-up detail  0.6%
+room: 20 frames, 63% of blocks have real detail (noise floor 49.6)
+  focus-stack     kept median 1.30, soft (<0.7)  0.0%, made-up detail 13.4%
+  ours depth map  kept median 0.89, soft (<0.7) 10.7%, made-up detail  0.0%
+  ours pyramid    kept median 0.97, soft (<0.7)  0.2%, made-up detail  0.1%
+  shine pyramid   kept median 1.16, soft (<0.7)  0.5%, made-up detail 14.1%
+  shine depth map kept median 0.98, soft (<0.7)  2.5%, made-up detail  4.5%
+pro: 50 frames, 1% of blocks have real detail (noise floor 8.5)
+  focus-stack     kept median 1.15, soft (<0.7) 24.4%, made-up detail 50.0%
+  ours depth map  kept median 1.00, soft (<0.7) 26.1%, made-up detail  0.0%
+  ours pyramid    kept median 0.83, soft (<0.7)  8.9%, made-up detail  0.2%
+  shine pyramid   kept median 0.25, soft (<0.7) 98.9%, made-up detail  0.0%
+  shine depth map kept median 0.23, soft (<0.7) 98.9%, made-up detail  0.0%
+studio_texture: 20 frames, 13% of blocks have real detail (noise floor 67.4)
+  focus-stack     kept median 1.35, soft (<0.7)  0.0%, made-up detail 24.2%
+  ours depth map  kept median 0.99, soft (<0.7)  3.9%, made-up detail  0.0%
+  ours pyramid    kept median 0.94, soft (<0.7)  3.7%, made-up detail  0.0%
+  shine pyramid   kept median 1.23, soft (<0.7)  0.0%, made-up detail 27.4%
+  shine depth map kept median 0.98, soft (<0.7)  1.5%, made-up detail  8.8%
+studio_glass: 20 frames, 6% of blocks have real detail (noise floor 16.5)
+  focus-stack     kept median 1.32, soft (<0.7)  2.8%, made-up detail 25.5%
+  ours depth map  kept median 0.92, soft (<0.7) 10.2%, made-up detail  0.0%
+  ours pyramid    kept median 1.02, soft (<0.7)  2.0%, made-up detail  0.2%
+  shine pyramid   kept median 1.25, soft (<0.7)  3.2%, made-up detail 36.7%
+  shine depth map kept median 1.06, soft (<0.7)  3.0%, made-up detail 17.9%
+studio_keypad: 20 frames, 9% of blocks have real detail (noise floor 19.1)
+  focus-stack     kept median 1.30, soft (<0.7)  0.2%, made-up detail 25.7%
+  ours depth map  kept median 0.99, soft (<0.7)  3.0%, made-up detail  0.0%
+  ours pyramid    kept median 0.95, soft (<0.7)  5.0%, made-up detail  0.0%
+  shine pyramid   kept median 1.22, soft (<0.7)  0.5%, made-up detail 32.7%
+  shine depth map kept median 0.99, soft (<0.7)  2.8%, made-up detail 11.5%
+studio_lace: 20 frames, 30% of blocks have real detail (noise floor 17.2)
+  focus-stack     kept median 1.34, soft (<0.7)  1.8%, made-up detail 40.7%
+  ours depth map  kept median 0.94, soft (<0.7)  9.9%, made-up detail  0.8%
+  ours pyramid    kept median 0.93, soft (<0.7)  2.3%, made-up detail  2.1%
+  shine pyramid   kept median 1.18, soft (<0.7)  2.6%, made-up detail 29.8%
+  shine depth map kept median 0.91, soft (<0.7)  9.4%, made-up detail 16.1%
+studio_switch: 20 frames, 26% of blocks have real detail (noise floor 8.2)
+  focus-stack     kept median 1.20, soft (<0.7)  7.9%, made-up detail 26.0%
+  ours depth map  kept median 0.89, soft (<0.7) 19.8%, made-up detail  1.3%
+  ours pyramid    kept median 0.89, soft (<0.7)  8.1%, made-up detail  1.4%
+  shine pyramid   kept median 1.17, soft (<0.7)  3.2%, made-up detail 31.6%
+  shine depth map kept median 0.93, soft (<0.7) 10.8%, made-up detail 17.6%
+studio_coin: 20 frames, 28% of blocks have real detail (noise floor 22.7)
+  focus-stack     kept median 1.22, soft (<0.7)  5.2%, made-up detail 33.5%
+  ours depth map  kept median 0.97, soft (<0.7)  7.7%, made-up detail  0.1%
+  ours pyramid    kept median 0.87, soft (<0.7) 11.2%, made-up detail  0.1%
+  shine pyramid   kept median 1.13, soft (<0.7)  2.6%, made-up detail 31.5%
+  shine depth map kept median 0.88, soft (<0.7) 14.1%, made-up detail 15.4%
+studio_needles: 19 frames, 4% of blocks have real detail (noise floor 26.1)
+  focus-stack     kept median 1.34, soft (<0.7)  0.2%, made-up detail 21.0%
+  ours depth map  kept median 0.98, soft (<0.7)  5.3%, made-up detail  0.0%
+  ours pyramid    kept median 0.95, soft (<0.7)  2.2%, made-up detail  0.1%
+  shine pyramid   kept median 1.21, soft (<0.7)  0.7%, made-up detail 24.7%
+  shine depth map kept median 0.98, soft (<0.7)  3.8%, made-up detail  7.6%
+studio_spools: 20 frames, 11% of blocks have real detail (noise floor 55.7)
+  focus-stack     kept median 1.22, soft (<0.7)  0.1%, made-up detail 18.8%
+  ours depth map  kept median 0.92, soft (<0.7) 10.6%, made-up detail  0.0%
+  ours pyramid    kept median 0.89, soft (<0.7)  8.6%, made-up detail  0.0%
+  shine pyramid   kept median 1.20, soft (<0.7)  0.1%, made-up detail 10.6%
+  shine depth map kept median 0.94, soft (<0.7)  3.4%, made-up detail  1.0%
+studio_threads: 20 frames, 4% of blocks have real detail (noise floor 123.4)
+  focus-stack     kept median 1.27, soft (<0.7)  0.6%, made-up detail 18.7%
+  ours depth map  kept median 0.84, soft (<0.7) 21.1%, made-up detail  0.0%
+  ours pyramid    kept median 0.83, soft (<0.7) 10.2%, made-up detail  0.0%
+  shine pyramid   kept median 1.15, soft (<0.7)  0.2%, made-up detail 10.9%
+  shine depth map kept median 0.90, soft (<0.7)  5.2%, made-up detail  0.8%
+studio_watch: 20 frames, 4% of blocks have real detail (noise floor 30.4)
+  focus-stack     kept median 1.32, soft (<0.7)  0.3%, made-up detail 15.7%
+  ours depth map  kept median 0.92, soft (<0.7) 10.3%, made-up detail  0.0%
+  ours pyramid    kept median 0.91, soft (<0.7)  1.5%, made-up detail  0.0%
+  shine pyramid   kept median 1.26, soft (<0.7)  1.0%, made-up detail 22.2%
+  shine depth map kept median 1.02, soft (<0.7)  4.8%, made-up detail  5.8%

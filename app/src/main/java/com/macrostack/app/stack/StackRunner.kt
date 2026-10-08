@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.math.abs
@@ -150,12 +149,14 @@ class StackRunner(
             startedAt.remove(index)?.let { rawPairer.drop(it) }
         }
 
-        fun bufferLost(index: Int, rawOutput: Boolean) {
+        /** Returns false if that file's loss was already accounted for. */
+        fun bufferLost(index: Int, rawOutput: Boolean): Boolean {
             val counted = if (rawOutput) true else jpegMatcher.lost(index)
             if (counted) {
                 lost.incrementAndGet()
                 completed.update { it + 1 }
             }
+            return counted
         }
 
         fun onJpeg(timestamp: Long, bytes: ByteArray) {
@@ -310,7 +311,7 @@ class StackRunner(
     }
 
     private suspend fun shootBurst(run: Run, options: Options) {
-        val dropped = ConcurrentLinkedQueue<Int>()
+        val reshoots = Reshoots(run.outputs)
         run.distances.indices.forEach { run.submitted(it) }
         _state.value = StackState.Shooting(0, run.total, run.distances.first())
         camera.captureBurst(
@@ -321,15 +322,19 @@ class StackRunner(
             listener = object : CameraController.BurstListener {
                 override fun onStillStarted(index: Int, timestamp: Long) = run.started(index, timestamp)
                 override fun onStillCompleted(index: Int, result: TotalCaptureResult) = run.recordStill(index, result)
-                override fun onStillBufferLost(index: Int, raw: Boolean) = run.bufferLost(index, raw)
+                override fun onStillBufferLost(index: Int, raw: Boolean) {
+                    if (run.bufferLost(index, raw)) reshoots.lost(index)
+                }
                 override fun onStillFailed(index: Int) {
                     run.failed(index)
-                    dropped += index
+                    reshoots.failed(index)
                 }
             },
         )
-        // Re-shoot, one at a time, any frame the camera dropped during the burst.
-        for (index in dropped.sorted()) {
+        // Re-shoot, one at a time, any frame the camera failed or dropped during the burst — once each.
+        for (index in reshoots.frames()) {
+            // The re-shoot replaces the dropped files; if it fails, it counts as a failed frame instead.
+            run.lost.addAndGet(-reshoots.lostFiles(index))
             if (!captureOne(run, index, options)) run.failed.incrementAndGet()
         }
     }
