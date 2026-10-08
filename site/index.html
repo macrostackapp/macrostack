@@ -170,15 +170,15 @@
     <p class="fine">Version 2.0.1 · Android 10 or newer · GPL-3.0</p>
 
     <div class="compare" id="compare">
-      <img class="after" src="img/pcb-stacked.jpg" width="1600" height="1199" alt="The stacked result: the pins, the USB port and the barcode behind them are all sharp.">
-      <img class="before" src="img/pcb-frame.jpg" width="1600" height="1199" alt="A single frame: only a thin slice in the middle is sharp; the USB port in front is blurred.">
+      <img class="after" src="img/needles-stacked.jpg" width="1600" height="1205" alt="The stacked result: the threaded needle's eye, every loose fibre of the black thread, the pink thread and the front needle are all sharp.">
+      <img class="before" src="img/needles-frame.jpg" width="1600" height="1205" alt="A single frame: only part of the black thread is sharp; the needle's eye and the front needle are blurred.">
       <div class="bar"></div>
       <div class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>
       <span class="tag tag-l">One frame</span>
-      <span class="tag tag-r">Stacked: 7 frames</span>
+      <span class="tag tag-r">Stacked: 19 frames</span>
       <input type="range" min="0" max="100" value="50" step="1" aria-label="Slide to compare one frame with the stacked result">
     </div>
-    <p class="caption">Drag to compare. A 7-frame test stack from the <a href="https://github.com/PetteriAimonen/focus-stack">focus-stack</a> project (Petteri Aimonen, MIT), merged by MacroStack's engine with the Depth map method.</p>
+    <p class="caption">Drag to compare. Shot and stacked by Bakkori on a Galaxy S24 Ultra (5× lens) with MacroStack: the first of 19 frames, and the photo the phone made from them with the Pyramid method.</p>
   </div>
 
   <section id="how">
@@ -239,18 +239,18 @@
       <p class="intro">Every version of the engine is benchmarked against two popular free desktop stackers, <a href="https://github.com/PetteriAimonen/focus-stack">focus-stack</a> and <a href="https://github.com/lucalista/shinestacker">Shine Stacker</a>, on the same stacks. Each result is checked block by block against the source frames. The scripts are in the repository, so anyone can rerun the test.</p>
 
       <div class="stats">
-        <div class="stat"><b>under 1%</b><span>made-up detail on every test stack. focus-stack: 2–50%, Shine Stacker: 0–14%.</span></div>
+        <div class="stat"><b>0–2%</b><span>made-up detail on all 17 test stacks. focus-stack: 2–50%, Shine Stacker: 0–37%.</span></div>
         <div class="stat"><b>0.06 px</b><span>alignment error between hand-held phone frames. focus-stack: 0.07 px.</span></div>
         <div class="stat"><b>21 fps</b><span>focus-bracket burst on a Galaxy S24 Ultra, like a pro camera's focus stacking mode.</span></div>
       </div>
 
       <div class="closeups">
-        <figure><img src="img/close-focusstack.jpg" width="600" height="500" loading="lazy" alt="focus-stack: blotchy dark patches and halos on the shiny metal"><figcaption>focus-stack 1.5<small>blotchy patches on shiny metal</small></figcaption></figure>
-        <figure><img src="img/close-shine.jpg" width="600" height="500" loading="lazy" alt="Shine Stacker pyramid result of the same spot"><figcaption>Shine Stacker 1.17<small>Pyramid method</small></figcaption></figure>
-        <figure><img src="img/close-pyramid.jpg" width="600" height="500" loading="lazy" alt="MacroStack pyramid result of the same spot"><figcaption class="ours">MacroStack Pyramid<small>the same engine as in the app</small></figcaption></figure>
-        <figure><img src="img/close-depthmap.jpg" width="600" height="500" loading="lazy" alt="MacroStack depth map result of the same spot"><figcaption class="ours">MacroStack Depth map<small>the same engine as in the app</small></figcaption></figure>
+        <figure><img src="img/close-focusstack.jpg" width="600" height="500" loading="lazy" alt="focus-stack: the needle's eye, with a grainy background"><figcaption>focus-stack 1.5<small>sharpens the background grain too</small></figcaption></figure>
+        <figure><img src="img/close-shine.jpg" width="600" height="500" loading="lazy" alt="Shine Stacker: the needle's eye, with a grainy background"><figcaption>Shine Stacker 1.17<small>sharpens the background grain too</small></figcaption></figure>
+        <figure><img src="img/close-pyramid.jpg" width="600" height="500" loading="lazy" alt="MacroStack Pyramid: the needle's eye, with a smoother background"><figcaption class="ours">MacroStack Pyramid<small>what the phone made</small></figcaption></figure>
+        <figure><img src="img/close-depthmap.jpg" width="600" height="500" loading="lazy" alt="MacroStack Depth map: the needle's eye, with the smoothest background"><figcaption class="ours">MacroStack Depth map<small>the smoothest background</small></figcaption></figure>
       </div>
-      <p class="caption" style="text-align:left;margin-left:0">The same spot of the stack above, enlarged 2.5×.</p>
+      <p class="caption" style="text-align:left;margin-left:0">The eye of the front needle in the stack above, enlarged about 2×: as sharp in all four, but only MacroStack keeps the out-of-focus background smooth.</p>
 
       <div class="table-scroll">
         <table>
@@ -267,7 +267,7 @@
           </thead>
           <tbody>
             <tr><td>Circuit-board switch, 10 frames, big focus steps</td><td>2.0<small>0.3</small></td><td>1.7<small>0.4</small></td><td>5.1<small class="hi">17.3</small></td><td>46.9*<small>2.9</small></td><td>49.1*<small>1.0</small></td></tr>
-            <tr><td>Circuit-board pins, 7 frames (above)</td><td>3.5<small>0.6</small></td><td>6.2<small>0.5</small></td><td>3.3<small class="hi">26.8</small></td><td>0.4<small>2.0</small></td><td>1.3<small>0.7</small></td></tr>
+            <tr><td>Circuit-board pins, 7 frames</td><td>3.5<small>0.6</small></td><td>6.2<small>0.5</small></td><td>3.3<small class="hi">26.8</small></td><td>0.4<small>2.0</small></td><td>1.3<small>0.7</small></td></tr>
             <tr><td>Plants, hand-held phone, 23 frames</td><td>0.7<small>0.1</small></td><td>2.4<small>0.4</small></td><td>1.4<small>5.0</small></td><td>0.0<small>2.4</small></td><td>1.4<small>0.1</small></td></tr>
             <tr><td>Fruits, hand-held phone, 30 frames</td><td>6.9<small>0.0</small></td><td>0.0<small>0.0</small></td><td>0.0<small>2.3</small></td><td>1.1<small>2.8</small></td><td>4.3<small>0.5</small></td></tr>
             <tr><td>Keyboard, hand-held phone, 32 frames</td><td>6.4<small>0.0</small></td><td>1.0<small>0.0</small></td><td>0.6<small>1.6</small></td><td>2.3<small>2.5</small></td><td>9.7<small>0.6</small></td></tr>
@@ -276,7 +276,7 @@
           </tbody>
         </table>
       </div>
-      <p class="note">* Shine Stacker's alignment skipped frames it couldn't match on these stacks (4 of 10 and 48 of 50), so its results there lack detail. Hand-held phone sweeps: <i>Depth from Focus with Your Mobile Phone</i> (Suwajanakorn, Hernández and Seitz, CVPR 2015). Pro macro: every 20th frame of a 999-frame stack by <a href="https://huggingface.co/datasets/jjjsood/focus-stack-sample">Johannes Sood</a> (CC BY 4.0).</p>
+      <p class="note">The table shows the first 7 test stacks. The 10 studio stacks shot with MacroStack join it with the next engine version. * Shine Stacker's alignment skipped frames it couldn't match on these stacks (4 of 10 and 48 of 50), so its results there lack detail. Hand-held phone sweeps: <i>Depth from Focus with Your Mobile Phone</i> (Suwajanakorn, Hernández and Seitz, CVPR 2015). Pro macro: every 20th frame of a 999-frame stack by <a href="https://huggingface.co/datasets/jjjsood/focus-stack-sample">Johannes Sood</a> (CC BY 4.0).</p>
 
       <div class="card honest">
         <h3>Where the others do better</h3>
