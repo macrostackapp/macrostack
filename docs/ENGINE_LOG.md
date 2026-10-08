@@ -82,6 +82,8 @@ flat noise 8.6 / 12.6 (single frame 22.6), occluder ring 24.5 / 26.6 dB (Depth m
   out. Today a DNG-only stack is decoded to 8 bits by Android with default settings.
 - Unused test data on disk: `samples/phone_dff` scenes balls, bottles, metal, telephone, window.
 - Retouch brush (paint a frame's detail back in) — the feature people pay Zerene/Helicon for.
+- Credits screen in the app (Settings → About) listing `docs/CONTRIBUTORS.md`: promised to everyone who
+  sends stacks (Facebook macro group post, 2026-10-08).
 
 ## Tried and didn't work (don't repeat without a new idea)
 

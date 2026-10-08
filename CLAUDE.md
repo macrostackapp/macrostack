@@ -48,7 +48,8 @@ When the user says to continue improving the engine, or adds new stacks to `samp
 
 1. **Catch up.** Read `docs/ENGINE_LOG.md` (flaws, backlog, what didn't work) and `tools/bench/sets.txt`.
    Look for new folders in `samples\` and register each in `sets.txt` (about one in three as `holdout`;
-   never tune on holdout sets' worst blocks).
+   never tune on holdout sets' worst blocks). Stacks from other photographers: record who sent them in
+   `docs/CONTRIBUTORS.md` (everyone who helps is credited; ask the user for anything missing).
 2. **Baseline.** `sh tools/bench/bench_all.sh <label>` (all sets; new ones get focus-stack run once) and
    `python tools/bench/compare_scores.py tools/bench/history/<latest>.txt tools/bench/work/bench/score_<label>.txt`.
 3. **Find flaws** on tune sets: worst-block sheets (`bench_score.py SET auto 0 tools/bench/work/ppm_SET 32 dm|py 6`),
