@@ -339,9 +339,13 @@
         </div>
         <p class="fine" style="margin:0 0 20px">Used only for testing. Shown publicly only if you say so.</p>
         <div class="buttons" style="justify-content:flex-start">
-          <a class="btn btn-primary" href="https://github.com/macrostackapp/macrostack/issues/new?template=share-stack.yml">Share a focus stack</a>
-          <a class="btn btn-ghost" href="https://github.com/macrostackapp/macrostack/issues/new?template=problem.yml">Report a problem</a>
+          <a class="btn btn-primary mail-stack" href="#help">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email me your stack
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/macrostackapp/macrostack/issues/new?template=share-stack.yml">Share on GitHub</a>
         </div>
+        <p class="fine" style="margin-top:14px">Email a Google Drive, Dropbox or WeTransfer link to the frames: <a class="mail-stack mail-address" href="#help">abubaker.elsultani at gmail.com</a> · <a href="https://github.com/macrostackapp/macrostack/issues/new?template=problem.yml">Report a problem</a></p>
       </div>
       <div class="card credits">
         <h3 style="margin-bottom:16px">Credits</h3>
@@ -394,6 +398,21 @@
     box.addEventListener("pointerup", function () { dragging = false; });
     box.addEventListener("pointercancel", function () { dragging = false; });
     input.addEventListener("input", function () { set(+input.value); });
+  })();
+
+  // The address is put together here, so simple address-harvesting bots reading the page don't find it.
+  (function () {
+    var address = "abubaker.elsultani" + "@" + "gmail.com";
+    var body = [
+      "Credit me as: ",
+      "Link to the original frames (Google Drive, Dropbox, WeTransfer...): ",
+      "Camera or phone, and lens: ",
+      "Subject (and anything a stacker got wrong): ",
+      "May crops be shown on the website, with credit? Yes / No",
+    ].join("\n");
+    var href = "mailto:" + address + "?subject=" + encodeURIComponent("Focus stack for MacroStack") + "&body=" + encodeURIComponent(body);
+    document.querySelectorAll(".mail-stack").forEach(function (a) { a.href = href; });
+    document.querySelectorAll(".mail-address").forEach(function (a) { a.textContent = address; });
   })();
 </script>
 </body>
