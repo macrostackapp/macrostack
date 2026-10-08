@@ -10,7 +10,7 @@ one photo that's sharp from front to back.
 [Share a test stack](https://github.com/macrostackapp/macrostack/issues/new?template=share-stack.yml) ·
 [Report a problem](https://github.com/macrostackapp/macrostack/issues/new?template=problem.yml)
 
-![One frame (left) and the photo MacroStack made on the phone from 19 frames (right)](site/img/og.jpg)
+![One frame (left) and the photo MacroStack made on the phone from 20 frames (right)](site/img/og.jpg)
 
 - **Shoot:** set the nearest and farthest focus points and the number of frames. The app drives the focus
   motor through even steps in one continuous burst, with exposure and white balance locked. JPEG or RAW (DNG).
